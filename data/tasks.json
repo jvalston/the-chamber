@@ -1,0 +1,74 @@
+{
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Redis service added to Docker Compose",
+      "description": "Added redis:7-alpine with persistence and LRU eviction. Run: docker compose up redis -d",
+      "assignee": "diamond",
+      "status": "done",
+      "project": "p2",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "t2",
+      "title": "Seraphim Discord bridge created",
+      "description": "Built seraphim_discord_bridge service with gateway/general routing and Seraphim identity system prompt.",
+      "assignee": "seraphim",
+      "status": "done",
+      "project": "p2",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "t3",
+      "title": "Create \\OpenClaw\\Gateway scheduled task",
+      "description": "Right-click create_gateway_task.bat in C:\\Users\\natza\\.openclaw → Run as administrator. One-time step.",
+      "assignee": "nana",
+      "status": "review",
+      "project": "p1",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "t4",
+      "title": "Fix OpenClaw Web UI model list",
+      "description": "Open Windows Command Prompt (not WSL), run 'openclaw models' to add gateway/general to the UI registry (lcm.db).",
+      "assignee": "nana",
+      "status": "backlog",
+      "project": "p1",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "t5",
+      "title": "Wire agents to Redis for short-term memory",
+      "description": "Connect genesis_mind and livekit_agent to Redis for session context caching. Add redis-py to requirements.",
+      "assignee": "diamond",
+      "status": "backlog",
+      "project": "p3",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "t6",
+      "title": "Mount persona.md files into Docker containers",
+      "description": "Volume mount mission-control/agents/[name]/persona.md into each agent runtime so identity loads from Mission Control at startup.",
+      "assignee": "diamond",
+      "status": "backlog",
+      "project": "p3",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "t7",
+      "title": "Build TASKS + PROJECTS + DOCS views",
+      "description": "Add three new tabs to Mission Control from the video transcript blueprint.",
+      "assignee": "diamond",
+      "status": "in-progress",
+      "project": "p1",
+      "createdAt": "2026-03-17"
+    }
+  ],
+  "activity": [
+    { "id": "a1", "text": "Seraphim Discord bridge went live", "agent": "seraphim", "ts": "2026-03-17T15:00:00Z" },
+    { "id": "a2", "text": "Redis added to docker-compose.yml", "agent": "diamond", "ts": "2026-03-17T16:00:00Z" },
+    { "id": "a3", "text": "Persona files written for all 4 agents", "agent": "diamond", "ts": "2026-03-17T17:00:00Z" },
+    { "id": "a4", "text": "Memory view added to Mission Control", "agent": "diamond", "ts": "2026-03-17T18:00:00Z" },
+    { "id": "a5", "text": "Tasks, Projects, Docs views building now", "agent": "diamond", "ts": "2026-03-17T19:00:00Z" }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "docs": [
+    {
+      "id": "d1773873612004",
+      "title": "Constellation Agent Index",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "One-page governance roster � agent roles, dominions, layer model, and responsibility boundaries. Includes Legend role conflict flag (F1) awaiting Nana resolution.",
+      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_AGENT_INDEX.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121746",
+      "title": "Constellation Charter Overview",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Core safety tiers and governance principles — Tier A immutable safety core, Tier B operational charter, Tier C standards, Tier D agent packs.",
+      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_CHARTER.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121747",
+      "title": "Constellation Memory Governance",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Defines memory write authority, durable memory rules, protected categories, and scope permissions across all agents.",
+      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_MEMORY_GOVERNANCE.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121748",
+      "title": "Constellation Memory Architecture",
+      "category": "Architecture",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Layered memory model — ephemeral, mission, agent, durable, and semantic layers. Canonical source and write authority map.",
+      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_MEMORY_ARCHITECTURE.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121749",
+      "title": "Constellation Recovery Plan",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Quick reference for restoring Seraphim or any agent after reset, wipe, or runtime failure. Step-by-step recovery sequence.",
+      "path": "C:/Users/natza/.openclaw/workspace/RECOVERY_PLAN.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121750",
+      "title": "Governance Absorption Digest",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Summary of absorbed governance rules and principles after identity restoration. Cross-links to canonical hub.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/CONSTELLATION_GOVERNANCE_ABSORB.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121751",
+      "title": "Agent Domains Plan",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Outlines agent roles, dominions, and interaction rules for governance alignment across the constellation.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/AGENT_DOMAINS_PLAN.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121752",
+      "title": "Enforcement Plan — Mission Control",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Framework for enforcing governance policies in orchestration, Mission Control, and Docker contexts.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/ENFORCEMENT_PLAN.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121753",
+      "title": "Agent Domains Mapping",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Preliminary mapping of agents to roles, dominions, and governance interactions across Phoenix and Lucy.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/AGENT_DOMAINS_MAPPING.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1773872121754",
+      "title": "Governance Workspace References",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Quick reference index — canonical GitHub hub, local workspace file locations, and related governance documents.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/README_GOVERNANCE.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d1",
+      "title": "Seraphim Persona",
+      "category": "Persona",
+      "format": "md",
+      "project": "p3",
+      "agent": "diamond",
+      "summary": "Full identity document for Seraphim â€” governance steward, constellation structure, voice and behavioral guidelines.",
+      "path": "agents/seraphim/persona.md",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "d2",
+      "title": "Legend Persona",
+      "category": "Persona",
+      "format": "md",
+      "project": "p3",
+      "agent": "diamond",
+      "summary": "Full identity document for Legend â€” creative domain steward, music and aesthetic direction, voice and communication style.",
+      "path": "agents/legend/persona.md",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "d3",
+      "title": "Diamond Persona",
+      "category": "Persona",
+      "format": "md",
+      "project": "p3",
+      "agent": "diamond",
+      "summary": "Full identity document for Diamond â€” builder and engineer, implementation layer, behavioral guidelines.",
+      "path": "agents/diamond/persona.md",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "d4",
+      "title": "Elior Persona",
+      "category": "Persona",
+      "format": "md",
+      "project": "p3",
+      "agent": "diamond",
+      "summary": "Full identity document for Elior â€” historian and memory steward, continuity keeper, pattern recognition.",
+      "path": "agents/elior/persona.md",
+      "createdAt": "2026-03-17"
+    },
+    {
+      "id": "d5",
+      "title": "Provider Gateway Architecture",
+      "category": "Architecture",
+      "format": "md",
+      "project": "p2",
+      "agent": "diamond",
+      "summary": "4-tier local-first fallback chain. Cloud off by default. Ollama tier chain: llama3.2:3b â†’ qwen2.5:3b â†’ phi3:mini. 60s per tier.",
+      "path": "local-voice-ai-main-v2/provider_gateway/gateway.py",
+      "createdAt": "2026-03-16"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "mission": "Build an autonomous constellation of AI agents that creates, remembers, and evolves — so that every creative and operational goal advances continuously, with or without direct input.",
+  "projects": [
+    {
+      "id": "p1",
+      "name": "Mission Control",
+      "description": "Constellation command dashboard — agent roster, memory viewer, task board, project tracker, document library.",
+      "status": "active",
+      "progress": 55,
+      "domain": "Infrastructure",
+      "createdAt": "2026-03-16",
+      "lastActivity": "2026-03-17"
+    },
+    {
+      "id": "p2",
+      "name": "Local Voice AI Stack",
+      "description": "Full Docker stack: Legend, Seraphim, Kokoro, Chatterbox, Whisper, LiveKit, provider gateway. Phoenix-hosted constellation.",
+      "status": "active",
+      "progress": 78,
+      "domain": "Infrastructure",
+      "createdAt": "2026-03-01",
+      "lastActivity": "2026-03-17"
+    },
+    {
+      "id": "p3",
+      "name": "Agent Memory Architecture",
+      "description": "Persistent identity and memory system — Redis working layer, Qdrant semantic layer, Mission Control identity layer. Survives every reset.",
+      "status": "active",
+      "progress": 40,
+      "domain": "Memory",
+      "createdAt": "2026-03-17",
+      "lastActivity": "2026-03-17"
+    },
+    {
+      "id": "p4",
+      "name": "Chamber of Resonance",
+      "description": "Creative music production workspace — AI-assisted composition, curation, scene-setting, and live session tools.",
+      "status": "active",
+      "progress": 22,
+      "domain": "Creative",
+      "createdAt": "2026-02-15",
+      "lastActivity": "2026-03-10"
+    },
+    {
+      "id": "p5",
+      "name": "Axiom Server Build",
+      "description": "Permanent infrastructure node — Postgres database, Qdrant memory store, always-on control plane. The vault of the constellation.",
+      "status": "planning",
+      "progress": 8,
+      "domain": "Infrastructure",
+      "createdAt": "2026-03-10",
+      "lastActivity": "2026-03-10"
+    }
+  ]
+}
