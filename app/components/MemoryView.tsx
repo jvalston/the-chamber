@@ -15,11 +15,13 @@ interface Identity {
   lastUpdated: string | null;
 }
 
-interface RedisStatus {
-  connected: boolean;
-  usedMemory?: string;
-  totalKeys?: number;
-  error?: string;
+interface MemoryLayers {
+  truerecall: { status: string; points: number | null; collection: string; description: string };
+  qdrant:     { status: string; episodic: number | null; description: string };
+  lcm:        { status: string; description: string };
+  redis:      { status: string; keys: number | null; memory: string | null; description: string };
+  archive:    { status: string; description: string };
+  checkedAt:  number;
 }
 
 const STATUS_COLOR: Record<string, string> = {
@@ -29,9 +31,16 @@ const STATUS_COLOR: Record<string, string> = {
   unknown:  "var(--text-muted)",
 };
 
+const LAYER_COLOR: Record<string, string> = {
+  online:  "var(--green)",
+  warn:    "var(--yellow)",
+  offline: "var(--red)",
+  static:  "var(--text-muted)",
+};
+
 export default function MemoryView() {
   const [identities, setIdentities] = useState<Identity[]>([]);
-  const [redis, setRedis]           = useState<RedisStatus | null>(null);
+  const [layers, setLayers]         = useState<MemoryLayers | null>(null);
   const [selected, setSelected]     = useState<string | null>(null);
   const [loading, setLoading]       = useState(true);
 
@@ -45,10 +54,15 @@ export default function MemoryView() {
       .catch(() => {})
       .finally(() => setLoading(false));
 
-    fetch("/api/memory")
-      .then((r) => r.json())
-      .then(setRedis)
-      .catch(() => setRedis({ connected: false, error: "unreachable" }));
+    function pollLayers() {
+      fetch("/api/memory-layers")
+        .then((r) => r.json())
+        .then(setLayers)
+        .catch(() => {});
+    }
+    pollLayers();
+    const id = setInterval(pollLayers, 20_000);
+    return () => clearInterval(id);
   }, []);
 
   const active = identities.find((a) => a.id === selected);
@@ -72,9 +86,9 @@ export default function MemoryView() {
         <div style={{ padding: "8px", flex: 1, overflowY: "auto" }}>
           <div
             style={{
-              fontSize: "9px",
+              fontSize: "11px",
               color: "var(--text-muted)",
-              letterSpacing: "0.1em",
+              letterSpacing: "0.06em",
               marginBottom: "10px",
               lineHeight: 1.6,
             }}
@@ -84,7 +98,7 @@ export default function MemoryView() {
           </div>
           <div
             style={{
-              fontSize: "8px",
+              fontSize: "10px",
               color: "var(--text-muted)",
               letterSpacing: "0.08em",
               marginBottom: "6px",
@@ -94,7 +108,7 @@ export default function MemoryView() {
           </div>
           <div
             style={{
-              fontSize: "8px",
+              fontSize: "10px",
               color: "var(--accent)",
               letterSpacing: "0.04em",
               marginBottom: "12px",
@@ -106,7 +120,7 @@ export default function MemoryView() {
           </div>
 
           {loading ? (
-            <div style={{ fontSize: "9px", color: "var(--text-muted)" }}>
+            <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>
               Loading...
             </div>
           ) : (
@@ -193,7 +207,7 @@ export default function MemoryView() {
             <span
               style={{
                 marginLeft: "auto",
-                fontSize: "9px",
+                fontSize: "11px",
                 color: "var(--text-muted)",
               }}
             >
@@ -228,10 +242,10 @@ export default function MemoryView() {
                 ["STATUS", active.status.toUpperCase()],
               ].map(([label, value]) => (
                 <div key={label} style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                  <span style={{ fontSize: "8px", color: "var(--text-muted)", letterSpacing: "0.1em" }}>
+                  <span style={{ fontSize: "10px", color: "var(--text-muted)", letterSpacing: "0.1em" }}>
                     {label}
                   </span>
-                  <span style={{ fontSize: "10px", color: "var(--text-primary)", letterSpacing: "0.06em" }}>
+                  <span style={{ fontSize: "12px", color: "var(--text-primary)", letterSpacing: "0.06em" }}>
                     {value}
                   </span>
                 </div>
@@ -242,7 +256,7 @@ export default function MemoryView() {
               <pre
                 style={{
                   fontFamily: "inherit",
-                  fontSize: "10px",
+                  fontSize: "12px",
                   lineHeight: 1.75,
                   color: "var(--text-secondary)",
                   whiteSpace: "pre-wrap",
@@ -292,121 +306,114 @@ export default function MemoryView() {
         )}
       </div>
 
-      {/* ── Right: Redis status + memory info ── */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        {/* Redis status */}
-        <div className="panel" style={{ flexShrink: 0 }}>
-          <div className="panel-header">MEMORY LAYER — REDIS</div>
-          <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  background: redis?.connected ? "var(--green)" : "var(--red)",
-                  flexShrink: 0,
-                }}
-              />
-              <span
-                style={{
-                  fontSize: "10px",
-                  color: redis?.connected ? "var(--green)" : "var(--red)",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                {redis === null ? "CHECKING..." : redis.connected ? "CONNECTED" : "OFFLINE"}
-              </span>
-            </div>
-
-            {redis?.connected && (
-              <>
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  {[
-                    ["MEMORY", redis.usedMemory ?? "—"],
-                    ["KEYS",   String(redis.totalKeys ?? 0)],
-                    ["PORT",   "6379"],
-                    ["MAX",    "512 MB"],
-                    ["POLICY", "LRU"],
-                  ].map(([label, val]) => (
-                    <div key={label} style={{ display: "flex", gap: "8px", fontSize: "9px" }}>
-                      <span style={{ color: "var(--text-muted)", width: "52px", flexShrink: 0 }}>
-                        {label}
-                      </span>
-                      <span style={{ color: "var(--text-secondary)" }}>{val}</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {redis && !redis.connected && (
-              <div style={{ fontSize: "9px", color: "var(--text-muted)", lineHeight: 1.5 }}>
-                Redis container not running. Start it with:<br />
-                <span style={{ color: "var(--accent)", fontFamily: "monospace" }}>
-                  docker compose up redis -d
-                </span>
-              </div>
-            )}
-          </div>
+      {/* ── Right: memory layers ── */}
+      <div className="panel" style={{ display: "flex", flexDirection: "column" }}>
+        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span>MEMORY LAYERS</span>
+          {layers?.checkedAt && (
+            <span style={{ fontSize: "10px", color: "var(--text-muted)", fontWeight: 400 }}>
+              {new Date(layers.checkedAt).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+            </span>
+          )}
         </div>
+        <div style={{ flex: 1, overflowY: "auto", padding: "10px", display: "flex", flexDirection: "column", gap: "6px" }}>
+          {layers === null && (
+            <div style={{ fontSize: "12px", color: "var(--text-muted)", padding: "8px 0" }}>Probing layers…</div>
+          )}
 
-        {/* Identity source explanation */}
-        <div className="panel" style={{ flex: 1 }}>
-          <div className="panel-header">HOW IDENTITY PERSISTS</div>
-          <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "10px" }}>
-            {[
-              {
-                layer: "persona.md",
-                desc: "Who the agent is. Name, soul, role, voice. Survives everything.",
-                color: "var(--green)",
-              },
-              {
-                layer: "profile.json",
-                desc: "Runtime config: model, host, transport, tools.",
-                color: "var(--accent)",
-              },
-              {
-                layer: "Redis",
-                desc: "Short-term working memory. Recent turns, session state, cross-agent shared data.",
-                color: "var(--yellow)",
-              },
-              {
-                layer: "Qdrant",
-                desc: "Long-term semantic memory. Searchable by meaning.",
-                color: "rgba(180,100,255,0.9)",
-              },
-            ].map(({ layer, desc, color }) => (
-              <div key={layer} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <span style={{ color, fontSize: "7px" }}>●</span>
-                  <span style={{ fontSize: "9px", color, letterSpacing: "0.08em", fontWeight: 600 }}>
-                    {layer}
-                  </span>
-                </div>
-                <div style={{ fontSize: "9px", color: "var(--text-muted)", paddingLeft: "13px", lineHeight: 1.5 }}>
-                  {desc}
-                </div>
-              </div>
-            ))}
-
+          {layers && [
+            {
+              key: "truerecall",
+              name: "TrueRecall",
+              status: layers.truerecall.status,
+              desc: layers.truerecall.description,
+              meta: layers.truerecall.points !== null
+                ? `${layers.truerecall.points.toLocaleString()} points · ${layers.truerecall.collection}`
+                : layers.truerecall.status === "offline" ? "Qdrant offline" : "collection not found",
+              color: "rgba(180,100,255,0.9)",
+            },
+            {
+              key: "qdrant",
+              name: "Qdrant",
+              status: layers.qdrant.status,
+              desc: layers.qdrant.description,
+              meta: layers.qdrant.episodic !== null
+                ? `legend_episodic: ${layers.qdrant.episodic.toLocaleString()} pts`
+                : "port 6333",
+              color: "rgba(150,80,255,0.85)",
+            },
+            {
+              key: "lcm",
+              name: "LCM",
+              status: layers.lcm.status,
+              desc: layers.lcm.description,
+              meta: "port 18790",
+              color: "var(--accent)",
+            },
+            {
+              key: "redis",
+              name: "Redis",
+              status: layers.redis.status,
+              desc: layers.redis.description,
+              meta: layers.redis.keys !== null
+                ? `${layers.redis.keys} keys · ${layers.redis.memory}`
+                : "port 6379",
+              color: "var(--yellow)",
+            },
+            {
+              key: "archive",
+              name: "Archive",
+              status: layers.archive.status,
+              desc: layers.archive.description,
+              meta: "static · file-based",
+              color: "var(--text-secondary)",
+            },
+          ].map(({ key, name, status, desc, meta, color }) => (
             <div
+              key={key}
               style={{
-                marginTop: "4px",
-                paddingTop: "10px",
-                borderTop: "1px solid var(--border)",
-                fontSize: "9px",
-                color: "var(--text-muted)",
-                lineHeight: 1.6,
+                padding: "10px 12px",
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid var(--border)",
+                borderRadius: "4px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
               }}
             >
-              Edit persona.md files in{" "}
-              <span style={{ color: "var(--accent)", fontFamily: "monospace" }}>
-                mission-control/agents/
-              </span>{" "}
-              — they are never touched by OpenClaw.
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    background: LAYER_COLOR[status] ?? "var(--text-muted)",
+                    flexShrink: 0,
+                    boxShadow: status === "online" ? `0 0 5px ${LAYER_COLOR[status]}` : "none",
+                  }}
+                />
+                <span style={{ fontSize: "13px", fontWeight: 700, color, letterSpacing: "0.1em" }}>
+                  {name.toUpperCase()}
+                </span>
+                <span
+                  style={{
+                    marginLeft: "auto",
+                    fontSize: "10px",
+                    color: LAYER_COLOR[status] ?? "var(--text-muted)",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {status === "static" ? "FILE" : status.toUpperCase()}
+                </span>
+              </div>
+              <div style={{ fontSize: "11px", color: "var(--text-muted)", paddingLeft: "16px" }}>
+                {desc}
+              </div>
+              <div style={{ fontSize: "11px", color: "var(--text-secondary)", paddingLeft: "16px", fontFamily: "monospace" }}>
+                {meta}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
