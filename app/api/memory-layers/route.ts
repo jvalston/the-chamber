@@ -87,18 +87,19 @@ export async function GET() {
     redisStatus(),
   ]);
 
-  // TrueRecall: check memories_tr collection when Qdrant is up
-  const trPoints = qdrantOk ? await qdrantCollection("memories_tr") : null;
-
-  // Genesis Mind collections (bonus info)
+  // TrueRecall: check legend_memories (active collection) when Qdrant is up
+  const trPoints     = qdrantOk ? await qdrantCollection("legend_memories") : null;
   const episodicPoints = qdrantOk ? await qdrantCollection("legend_episodic") : null;
+  const knowledgePoints = qdrantOk ? await qdrantCollection("legend_knowledge") : null;
+
+  const totalPoints = (trPoints ?? 0) + (episodicPoints ?? 0) + (knowledgePoints ?? 0);
 
   return NextResponse.json({
     truerecall: {
-      status: (qdrantOk && trPoints !== null ? "online" : qdrantOk ? "warn" : "offline") as LayerStatus,
-      points: trPoints,
-      collection: "memories_tr",
-      description: "Episodic capture — mem-qdrant-watcher",
+      status: (qdrantOk ? "online" : "offline") as LayerStatus,
+      points: qdrantOk ? totalPoints : null,
+      collection: "legend_memories · legend_episodic · legend_knowledge",
+      description: "Semantic memory — Qdrant-backed",
     },
     qdrant: {
       status: (qdrantOk ? "online" : "offline") as LayerStatus,
