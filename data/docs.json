@@ -164,6 +164,138 @@
       "summary": "4-tier local-first fallback chain. Cloud off by default. Ollama tier chain: llama3.2:3b â†’ qwen2.5:3b â†’ phi3:mini. 60s per tier.",
       "path": "local-voice-ai-main-v2/provider_gateway/gateway.py",
       "createdAt": "2026-03-16"
+    },
+    {
+      "id": "d17738868305990",
+      "title": "Constellation Recovery Brief (Mar 2026)",
+      "category": "Recovery",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "High-level incident + restoration brief covering reset causes, governance restoration, infrastructure status, and continuity protections.",
+      "path": "C:/Users/natza/.openclaw/workspace/RECOVERY_BRIEF.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305991",
+      "title": "Seraphim Repo-Ready Implementation Blueprint",
+      "category": "Architecture",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Phased implementation blueprint for local-first Seraphim stack with Telegram, voice, and knowledge-base boundaries.",
+      "path": "C:/Users/natza/.openclaw/workspace/Seraphim-repo-ready-implementation-blueprint.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305992",
+      "title": "Seraphim Starter README",
+      "category": "Architecture",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Starter project guide for services, collections, and continuity baseline in the seraphim-system scaffold.",
+      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/README.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305993",
+      "title": "Memory Protocol — Minimal",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Compact memory creation/storage/retrieval protocol with typed entries, approval gates, and token-efficiency rules.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/MEMORY_PROTOCOL_MINIMAL.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305994",
+      "title": "Minimal API Call Governance",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Lightweight API-call policy: justification, approval threshold, audit logging, and enforcement workflow.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/MINIMAL_API_CALL_GOVERNANCE.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305995",
+      "title": "Incident Termination Template",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Standard incident template for suspension/termination decisions, evidence logging, and approval chain.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/INCIDENT_TERMINATION_TEMPLATE.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305996",
+      "title": "Elior Historian Duties",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Role scope and historian/recaller workflow for episodic memory capture, indexing, and governance-aligned recall.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/Elior_historian_duties.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305997",
+      "title": "Episodic Memory Policy (Elior)",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Episodic memory handling rules, schema expectations, and promotion boundaries for historian workflows.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/EPISODIC_MEMORY_POLICY_Elior.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305998",
+      "title": "Onboarding — Elior",
+      "category": "Governance",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Quick-start onboarding for Elior role responsibilities and memory/governance operating constraints.",
+      "path": "C:/Users/natza/.openclaw/workspace/memory/ONBOARDING_Elior.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d17738868305999",
+      "title": "Memory Restart Policy (All Agents)",
+      "category": "Recovery",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Mandatory restart artifacts and update cadence for every agent to reduce reset impact.",
+      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/memory/shared/AGENT_MEMORY_RESTART_POLICY.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d177388683059910",
+      "title": "Agent Continuity Matrix",
+      "category": "Recovery",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Per-agent continuity map: identity, checkpoint, runbook, and status tracking for restart readiness.",
+      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/memory/shared/AGENT_CONTINUITY_MATRIX.md",
+      "createdAt": "2026-03-18"
+    },
+    {
+      "id": "d177388683059911",
+      "title": "Seraphim Continuity Checkpoint",
+      "category": "Recovery",
+      "format": "md",
+      "project": "",
+      "agent": "seraphim",
+      "summary": "Current-state continuity packet for Seraphim with restart sources and active priorities.",
+      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/memory/seraphim/continuity_checkpoint.md",
+      "createdAt": "2026-03-18"
     }
   ]
 }
