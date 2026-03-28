@@ -20,7 +20,7 @@ async function qdrantCollection(name: string): Promise<number | null> {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 2000);
   try {
-    const r = await fetch(`http://localhost:6333/collections/${name}`, {
+    const r = await fetch(`http://localhost:16333/collections/${name}`, {
       signal: ctrl.signal,
       cache: "no-store",
     });
@@ -81,16 +81,18 @@ async function redisStatus(): Promise<{ connected: boolean; keys: number | null;
 }
 
 export async function GET() {
-  const [qdrantOk, lcmOk, redis] = await Promise.all([
-    probeHttp("http://localhost:6333/healthz"),
+  const [qdrantOk, lcmOk, veraOk, redis] = await Promise.all([
+    probeHttp("http://localhost:16333/healthz"),
     probeHttp("http://localhost:18790/health"),
+    probeHttp("http://localhost:11450"),
     redisStatus(),
   ]);
 
   // TrueRecall: check legend_memories (active collection) when Qdrant is up
-  const trPoints     = qdrantOk ? await qdrantCollection("legend_memories") : null;
-  const episodicPoints = qdrantOk ? await qdrantCollection("legend_episodic") : null;
+  const trPoints        = qdrantOk ? await qdrantCollection("legend_memories")  : null;
+  const episodicPoints  = qdrantOk ? await qdrantCollection("legend_episodic")  : null;
   const knowledgePoints = qdrantOk ? await qdrantCollection("legend_knowledge") : null;
+  const veraPoints      = qdrantOk ? await qdrantCollection("vera_memories")    : null;
 
   const totalPoints = (trPoints ?? 0) + (episodicPoints ?? 0) + (knowledgePoints ?? 0);
 
@@ -104,7 +106,12 @@ export async function GET() {
     qdrant: {
       status: (qdrantOk ? "online" : "offline") as LayerStatus,
       episodic: episodicPoints,
-      description: "Vector store — port 6333",
+      description: "Vector store — port 16333",
+    },
+    vera: {
+      status: (veraOk ? "online" : "offline") as LayerStatus,
+      points: veraPoints,
+      description: "Bounded context proxy — semantic search + rolling context window",
     },
     lcm: {
       status: (lcmOk ? "online" : "offline") as LayerStatus,

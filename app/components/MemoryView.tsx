@@ -18,6 +18,7 @@ interface Identity {
 interface MemoryLayers {
   truerecall: { status: string; points: number | null; collection: string; description: string };
   qdrant:     { status: string; episodic: number | null; description: string };
+  vera:       { status: string; points: number | null; description: string };
   lcm:        { status: string; description: string };
   redis:      { status: string; keys: number | null; memory: string | null; description: string };
   archive:    { status: string; description: string };
@@ -339,8 +340,18 @@ export default function MemoryView() {
               desc: layers.qdrant.description,
               meta: layers.qdrant.episodic !== null
                 ? `legend_episodic: ${layers.qdrant.episodic.toLocaleString()} pts`
-                : "port 6333",
+                : "port 16333",
               color: "rgba(150,80,255,0.85)",
+            },
+            {
+              key: "vera",
+              name: "Vera AI",
+              status: layers.vera.status,
+              desc: layers.vera.description,
+              meta: layers.vera.points !== null
+                ? `${layers.vera.points.toLocaleString()} pts · vera_memories`
+                : "port 11450",
+              color: "rgba(0,212,255,0.9)",
             },
             {
               key: "lcm",

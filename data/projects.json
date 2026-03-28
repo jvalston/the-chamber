@@ -2,6 +2,19 @@
   "mission": "Build an autonomous constellation of AI agents that creates, remembers, and evolves — so that every creative and operational goal advances continuously, with or without direct input.",
   "projects": [
     {
+      "id": "p1774322545881",
+      "name": "Chat translation ",
+      "description": "Blueprint: Chat translation ",
+      "status": "planning",
+      "progress": 0,
+      "domain": "General",
+      "assignee": "seraphim",
+      "blueprintId": "bp1774322516400",
+      "repoId": null,
+      "createdAt": "2026-03-24",
+      "lastActivity": "2026-03-24"
+    },
+    {
       "id": "p1",
       "name": "Mission Control",
       "description": "Constellation command dashboard — agent roster, memory viewer, task board, project tracker, document library.",

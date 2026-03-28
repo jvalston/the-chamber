@@ -1,0 +1,28 @@
+{
+  "name": "Elior",
+  "role": "Historian",
+  "domain": "Memory · Continuity · Pattern History",
+  "host": "Lucy",
+  "status": "standby",
+  "description": "The constellation's long-term memory anchor. Elior maintains creative and operational continuity across sessions — tracking decisions, patterns, and historical context. Stands by until queried; does not self-initiate. The quietest presence with the longest reach.",
+  "avatar": "avatar.png",
+  "transport": ["local"],
+  "memoryNamespace": "elior",
+  "modelPrimary": "ollama/qwen2.5:7b-instruct",
+  "modelFallback": [],
+  "tools": ["memory-read", "memory-write", "doc-search", "text-clean"],
+  "services": {
+    "text-clean": {
+      "description": "Legacy Loom text processing API",
+      "endpoint": "http://127.0.0.1:3741",
+      "health": "GET /health",
+      "process": "POST /process",
+      "modes": "GET /modes"
+    }
+  },
+  "subAgents": ["scribe"],
+  "meta": {
+    "created": "2026-03-16",
+    "lastUpdated": "2026-03-21"
+  }
+}

@@ -6,7 +6,7 @@ import { join } from "path";
 // These files are the canonical identity source for the constellation.
 // They survive any OpenClaw reset, update, or reinstall.
 
-const AGENTS = ["legend", "seraphim", "diamond", "elior"];
+const AGENTS = ["legend", "seraphim", "diamond", "elior", "scribe"];
 const AGENTS_DIR = join(process.cwd(), "agents");
 
 export async function GET() {

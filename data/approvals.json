@@ -1,0 +1,44 @@
+{
+  "approvals": [
+    {
+      "id": "a1",
+      "title": "Expand Qdrant namespace for Legend",
+      "description": "Legend requests a new vector namespace for long-term creative references. Estimated size: 50k vectors.",
+      "requestedBy": "Seraphim",
+      "priority": "normal",
+      "status": "pending",
+      "created": "2026-03-27T08:14:00.000Z",
+      "category": "Memory"
+    },
+    {
+      "id": "a2",
+      "title": "Add shell access scope for Diamond",
+      "description": "Diamond needs expanded shell permissions for the Lucy build environment. Currently read-only.",
+      "requestedBy": "Seraphim",
+      "priority": "urgent",
+      "status": "pending",
+      "created": "2026-03-27T07:40:00.000Z",
+      "category": "Permissions"
+    },
+    {
+      "id": "a3",
+      "title": "Archive Elior's working session logs",
+      "description": "Elior has accumulated 30 days of session logs. Requesting approval to move to Archive store.",
+      "requestedBy": "Elior",
+      "priority": "low",
+      "status": "pending",
+      "created": "2026-03-26T00:00:00.000Z",
+      "category": "Memory"
+    },
+    {
+      "id": "a4",
+      "title": "Connect Discord webhook — #build-log",
+      "description": "Diamond wants to post build completion notices to the #build-log Discord channel.",
+      "requestedBy": "Diamond",
+      "priority": "normal",
+      "status": "deferred",
+      "created": "2026-03-25T00:00:00.000Z",
+      "category": "Transport"
+    }
+  ]
+}

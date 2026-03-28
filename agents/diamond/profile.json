@@ -1,0 +1,18 @@
+{
+  "name": "Diamond",
+  "role": "Builder / Engineer",
+  "domain": "Code Execution · File Operations · Implementation",
+  "host": "Lucy",
+  "status": "active",
+  "description": "Primary implementation agent of the constellation. Diamond handles code execution, file operations, and shell access. She receives structured directives and produces working artifacts. Runs on Lucy for isolation from the primary Phoenix stack.",
+  "avatar": "avatar.png",
+  "transport": ["local"],
+  "memoryNamespace": "diamond",
+  "modelPrimary": "groq/llama-3.3-70b-versatile",
+  "modelFallback": ["openrouter/auto", "ollama/qwen2.5-coder:3b"],
+  "tools": ["code-exec", "file-read", "file-write", "shell"],
+  "meta": {
+    "created": "2026-03-16",
+    "lastUpdated": "2026-03-16"
+  }
+}

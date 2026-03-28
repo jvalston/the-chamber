@@ -1,17 +1,49 @@
 "use client";
 
-// TODO: replace ACTIVE_AGENTS import with live agent registry fetch
-import { ACTIVE_AGENTS } from "../../lib/mock/agents";
+import { useEffect, useState } from "react";
+import { AgentEntry } from "../../config/agents.config";
+import { Agent } from "../../lib/mock/agents";
 import AgentCard from "./AgentCard";
 
+function toAgent(e: AgentEntry): Agent {
+  const isWaiting = e.state === "draft" || e.state === "archived";
+  return {
+    ...e,
+    currentModel:   e.modelPrimary,
+    fallbackModels: e.modelFallback,
+    lastSeen:       e.state === "active"  ? "live"
+                  : e.state === "standby" ? "standby"
+                  : undefined,
+    category: isWaiting ? "waiting" : "active",
+  };
+}
+
 export default function ActiveAgentsPanel() {
-  const onlineCount  = ACTIVE_AGENTS.filter((a) => a.state === "active").length;
-  const standbyCount = ACTIVE_AGENTS.filter((a) => a.state === "standby").length;
+  const [agents, setAgents] = useState<Agent[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const r = await fetch("/api/agents", { cache: "no-store" });
+        if (r.ok) {
+          const data = await r.json();
+          const all: Agent[] = (data.agents as AgentEntry[]).map(toAgent);
+          setAgents(all.filter((a) => a.category === "active"));
+        }
+      } catch { /* keep last known */ }
+    }
+    load();
+    const id = setInterval(load, 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  const onlineCount  = agents.filter((a) => a.state === "active").length;
+  const standbyCount = agents.filter((a) => a.state === "standby").length;
 
   return (
     <div
       className="panel"
-      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+      style={{ display: "flex", flexDirection: "column", flexShrink: 0 }}
     >
       <div className="panel-header">
         <span>ACTIVE AGENTS</span>
@@ -37,17 +69,14 @@ export default function ActiveAgentsPanel() {
 
       <div
         style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "10px",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-          gap: "8px",
-          alignContent: "start",
+          padding:    "10px",
+          display:    "flex",
+          flexDirection: "row",
+          gap:        "8px",
+          overflowX:  "auto",
         }}
       >
-        {/* TODO: replace mock data with live agent registry */}
-        {ACTIVE_AGENTS.map((agent) => (
+        {agents.map((agent) => (
           <AgentCard key={agent.id} agent={agent} />
         ))}
       </div>

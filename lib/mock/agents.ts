@@ -5,7 +5,8 @@
 //
 // TODO: replace AGENTS import with live agent registry API fetch
 
-import { AGENTS, AgentEntry, AgentState } from "../../config/agents.config";
+import { AGENTS, AgentEntry, AgentState, SYSTEM_NODES } from "../../config/agents.config";
+export { SYSTEM_NODES };
 
 export type { AgentState };
 export type AgentCategory = "active" | "waiting";

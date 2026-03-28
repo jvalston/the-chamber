@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 
 type Status = "backlog" | "in-progress" | "review" | "done";
-type Assignee = "nana" | "legend" | "seraphim" | "diamond" | "elior" | "system";
+type Assignee = "nana" | "legend" | "seraphim" | "lumen" | "diamond" | "elior" | "sentinel" | "kairo" | "aurelion" | "veris" | "atlas" | "aurora" | "system";
 
 interface Task {
   id: string;
@@ -31,10 +31,17 @@ const COLUMNS: { key: Status; label: string }[] = [
 
 const ASSIGNEE_COLOR: Record<Assignee | string, string> = {
   nana:     "var(--accent)",
-  legend:   "rgba(180,100,255,0.9)",
-  seraphim: "#f5c842",
-  diamond:  "#4ab0f5",
-  elior:    "var(--green)",
+  legend:   "#00d4ff",
+  seraphim: "#a855f7",
+  lumen:    "#818cf8",
+  diamond:  "#00ff9d",
+  elior:    "#ffd700",
+  sentinel: "#ff6b6b",
+  kairo:    "#38bdf8",
+  aurelion: "#facc15",
+  veris:    "#4ade80",
+  atlas:    "#f97316",
+  aurora:   "#ec4899",
   system:   "var(--text-muted)",
 };
 
@@ -42,8 +49,15 @@ const ASSIGNEE_INITIAL: Record<Assignee | string, string> = {
   nana:     "N",
   legend:   "L",
   seraphim: "S",
+  lumen:    "Lu",
   diamond:  "D",
   elior:    "E",
+  sentinel: "Se",
+  kairo:    "K",
+  aurelion: "Au",
+  veris:    "V",
+  atlas:    "At",
+  aurora:   "Ar",
   system:   "·",
 };
 
@@ -232,8 +246,15 @@ function NewTaskForm({ onSave, onCancel }: { onSave: (t: Partial<Task>) => void;
           <option value="nana">Nana (you)</option>
           <option value="legend">Legend</option>
           <option value="seraphim">Seraphim</option>
+          <option value="lumen">Lumen</option>
           <option value="diamond">Diamond</option>
           <option value="elior">Elior</option>
+          <option value="sentinel">Sentinel</option>
+          <option value="kairo">Kairo</option>
+          <option value="aurelion">Aurelion</option>
+          <option value="veris">Veris</option>
+          <option value="atlas">Atlas</option>
+          <option value="aurora">Aurora</option>
         </select>
       </div>
       <div style={{ display: "flex", gap: "6px" }}>
@@ -286,7 +307,11 @@ export default function TasksView() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    const id = setInterval(load, 20_000);
+    return () => clearInterval(id);
+  }, []);
 
   async function moveTask(id: string, dir: 1 | -1) {
     const task = tasks.find((t) => t.id === id);

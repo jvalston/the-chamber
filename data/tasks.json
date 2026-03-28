@@ -1,6 +1,15 @@
 {
   "tasks": [
     {
+      "id": "t1774322545963",
+      "title": "Review and implement: Chat translation ",
+      "description": "CONSTELLATION \n\nby\n\nNana \n\nCopyright © 2026 by Nana \n\nAll rights reserved.\n\n     I Have a question about. My. Future plans for the Constellation? And I'm wondering if you could help me. With that.\n\n     Of course. Sit with me a moment and tell me what you’re seeing when you say the Constellation. 🌌",
+      "assignee": "seraphim",
+      "status": "backlog",
+      "project": "p1774322545881",
+      "createdAt": "2026-03-24"
+    },
+    {
       "id": "t1",
       "title": "Redis service added to Docker Compose",
       "description": "Added redis:7-alpine with persistence and LRU eviction. Run: docker compose up redis -d",
@@ -65,10 +74,41 @@
     }
   ],
   "activity": [
-    { "id": "a1", "text": "Seraphim Discord bridge went live", "agent": "seraphim", "ts": "2026-03-17T15:00:00Z" },
-    { "id": "a2", "text": "Redis added to docker-compose.yml", "agent": "diamond", "ts": "2026-03-17T16:00:00Z" },
-    { "id": "a3", "text": "Persona files written for all 4 agents", "agent": "diamond", "ts": "2026-03-17T17:00:00Z" },
-    { "id": "a4", "text": "Memory view added to Mission Control", "agent": "diamond", "ts": "2026-03-17T18:00:00Z" },
-    { "id": "a5", "text": "Tasks, Projects, Docs views building now", "agent": "diamond", "ts": "2026-03-17T19:00:00Z" }
+    {
+      "id": "a1774322545963",
+      "text": "New task: \"Review and implement: Chat translation \"",
+      "agent": "seraphim",
+      "ts": "2026-03-24T03:22:25.963Z"
+    },
+    {
+      "id": "a1",
+      "text": "Seraphim Discord bridge went live",
+      "agent": "seraphim",
+      "ts": "2026-03-17T15:00:00Z"
+    },
+    {
+      "id": "a2",
+      "text": "Redis added to docker-compose.yml",
+      "agent": "diamond",
+      "ts": "2026-03-17T16:00:00Z"
+    },
+    {
+      "id": "a3",
+      "text": "Persona files written for all 4 agents",
+      "agent": "diamond",
+      "ts": "2026-03-17T17:00:00Z"
+    },
+    {
+      "id": "a4",
+      "text": "Memory view added to Mission Control",
+      "agent": "diamond",
+      "ts": "2026-03-17T18:00:00Z"
+    },
+    {
+      "id": "a5",
+      "text": "Tasks, Projects, Docs views building now",
+      "agent": "diamond",
+      "ts": "2026-03-17T19:00:00Z"
+    }
   ]
 }

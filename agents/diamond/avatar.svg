@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" fill="#050810"/>
+  <polygon points="32,5 59,32 32,59 5,32" fill="rgba(56,189,248,0.06)" stroke="#38bdf8" stroke-width="1"/>
+  <polygon points="32,16 48,32 32,48 16,32" fill="none" stroke="#38bdf8" stroke-width="0.5" opacity="0.4"/>
+  <text x="32" y="38" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="22" font-weight="700">D</text>
+</svg>
