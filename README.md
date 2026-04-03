@@ -27,6 +27,8 @@ Example embed line to use after you add the file:
 ![Mission Control Demo](docs/assets/mission-control-demo.gif)
 ```
 
+Social preview spec: [`docs/assets/social-preview-spec.md`](docs/assets/social-preview-spec.md)
+
 ## For Developers
 
 - UI: `app/components/*` (tab views and system panels)
