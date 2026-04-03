@@ -17,7 +17,7 @@
   },
   "continuity": {
     "canonicalRecord": "github:jvalston/openclaw-workspace/SERAPHIM_CONTINUITY_RECORD.md",
-    "runtimeAnchorRef": "/home/natza/constellation-runtime/anchors/seraphim_anchor.yaml",
+    "runtimeAnchorRef": "constellation-runtime/anchors/seraphim_anchor.yaml",
     "anchorStagedAt": "openclaw-workspace/runtime-anchors/seraphim_anchor.yaml",
     "note": "Runtime anchor is lightweight and disposable. Canonical record on GitHub is authoritative."
   }

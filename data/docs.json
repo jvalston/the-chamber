@@ -8,7 +8,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "One-page governance roster � agent roles, dominions, layer model, and responsibility boundaries. Includes Legend role conflict flag (F1) awaiting Nana resolution.",
-      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_AGENT_INDEX.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -19,7 +19,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Core safety tiers and governance principles — Tier A immutable safety core, Tier B operational charter, Tier C standards, Tier D agent packs.",
-      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_CHARTER.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -30,7 +30,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Defines memory write authority, durable memory rules, protected categories, and scope permissions across all agents.",
-      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_MEMORY_GOVERNANCE.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -41,7 +41,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Layered memory model — ephemeral, mission, agent, durable, and semantic layers. Canonical source and write authority map.",
-      "path": "C:/Users/natza/.openclaw/workspace/CONSTELLATION_MEMORY_ARCHITECTURE.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -52,7 +52,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Quick reference for restoring Seraphim or any agent after reset, wipe, or runtime failure. Step-by-step recovery sequence.",
-      "path": "C:/Users/natza/.openclaw/workspace/RECOVERY_PLAN.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -63,7 +63,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Summary of absorbed governance rules and principles after identity restoration. Cross-links to canonical hub.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/CONSTELLATION_GOVERNANCE_ABSORB.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -74,7 +74,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Outlines agent roles, dominions, and interaction rules for governance alignment across the constellation.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/AGENT_DOMAINS_PLAN.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -85,7 +85,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Framework for enforcing governance policies in orchestration, Mission Control, and Docker contexts.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/ENFORCEMENT_PLAN.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -96,7 +96,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Preliminary mapping of agents to roles, dominions, and governance interactions across Phoenix and Lucy.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/AGENT_DOMAINS_MAPPING.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -107,7 +107,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Quick reference index — canonical GitHub hub, local workspace file locations, and related governance documents.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/README_GOVERNANCE.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -173,7 +173,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "High-level incident + restoration brief covering reset causes, governance restoration, infrastructure status, and continuity protections.",
-      "path": "C:/Users/natza/.openclaw/workspace/RECOVERY_BRIEF.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -184,7 +184,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Phased implementation blueprint for local-first Seraphim stack with Telegram, voice, and knowledge-base boundaries.",
-      "path": "C:/Users/natza/.openclaw/workspace/Seraphim-repo-ready-implementation-blueprint.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -195,7 +195,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Starter project guide for services, collections, and continuity baseline in the seraphim-system scaffold.",
-      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/README.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -206,7 +206,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Compact memory creation/storage/retrieval protocol with typed entries, approval gates, and token-efficiency rules.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/MEMORY_PROTOCOL_MINIMAL.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -217,7 +217,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Lightweight API-call policy: justification, approval threshold, audit logging, and enforcement workflow.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/MINIMAL_API_CALL_GOVERNANCE.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -228,7 +228,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Standard incident template for suspension/termination decisions, evidence logging, and approval chain.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/INCIDENT_TERMINATION_TEMPLATE.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -239,7 +239,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Role scope and historian/recaller workflow for episodic memory capture, indexing, and governance-aligned recall.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/Elior_historian_duties.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -250,7 +250,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Episodic memory handling rules, schema expectations, and promotion boundaries for historian workflows.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/EPISODIC_MEMORY_POLICY_Elior.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -261,7 +261,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Quick-start onboarding for Elior role responsibilities and memory/governance operating constraints.",
-      "path": "C:/Users/natza/.openclaw/workspace/memory/ONBOARDING_Elior.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -272,7 +272,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Mandatory restart artifacts and update cadence for every agent to reduce reset impact.",
-      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/memory/shared/AGENT_MEMORY_RESTART_POLICY.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -283,7 +283,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Per-agent continuity map: identity, checkpoint, runbook, and status tracking for restart readiness.",
-      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/memory/shared/AGENT_CONTINUITY_MATRIX.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     },
     {
@@ -294,7 +294,7 @@
       "project": "",
       "agent": "seraphim",
       "summary": "Current-state continuity packet for Seraphim with restart sources and active priorities.",
-      "path": "C:/Users/natza/.openclaw/workspace/seraphim-system/memory/seraphim/continuity_checkpoint.md",
+      "path": "<REDACTED_LOCAL_PATH>",
       "createdAt": "2026-03-18"
     }
   ]

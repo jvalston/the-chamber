@@ -6,8 +6,8 @@ import { join }                      from "path";
 // ---------------------------------------------------------------------------
 // Agent roster — maps UI agent ID → { node, gatewayAgentId }
 //
-//  Lucy  WSL (SSH nana@100.119.215.107): main=Sentinel, diamond, elior, aurelion, atlas
-//  Phoenix WSL (local wsl -e bash):      main=Seraphim, aurora, lumen, legend, kairo, veris
+//  Lucy  WSL (SSH user@host): main=Sentinel, diamond, elior, aurelion, atlas
+//  Phoenix WSL (local wsl -e bash): main=Seraphim, aurora, lumen, legend, kairo, veris
 // ---------------------------------------------------------------------------
 const ROSTER: Record<string, { node: "lucy" | "phoenix"; gwId: string }> = {
   sentinel:  { node: "lucy",    gwId: "main"     },
@@ -29,13 +29,12 @@ const ROSTER: Record<string, { node: "lucy" | "phoenix"; gwId: string }> = {
 // Gateway paths
 // ---------------------------------------------------------------------------
 
-// Phoenix WSL — full node + openclaw dist path (avoids PATH issues in spawn)
-const PHOENIX_NODE     = "/usr/bin/node";
-const PHOENIX_OPENCLAW = "/home/natza/.npm-global/lib/node_modules/openclaw/dist/index.js";
+// Phoenix WSL command (env-overridable for portability)
+const PHOENIX_OPENCLAW_BIN = process.env.PHOENIX_OPENCLAW_BIN ?? "/usr/bin/openclaw";
 
 // Lucy WSL — SSH then use system openclaw binary
-const LUCY_SSH_HOST = process.env.LUCY_SSH_HOST ?? "100.119.215.107";
-const LUCY_SSH_USER = process.env.LUCY_SSH_USER ?? "nana";
+const LUCY_SSH_HOST = process.env.LUCY_SSH_HOST ?? "127.0.0.1";
+const LUCY_SSH_USER = process.env.LUCY_SSH_USER ?? "user";
 const LUCY_OPENCLAW = "/usr/bin/openclaw"; // confirmed path on Lucy WSL
 
 const LOG_PATH = join(process.cwd(), "data", "comms-log.json");
@@ -70,7 +69,7 @@ export async function POST(req: NextRequest) {
     // Run openclaw directly in Phoenix WSL — gateway is on localhost:18789
     wslCmd = [
       `MSG=$(printf '%s' '${msgB64}' | base64 -d)`,
-      `&& ${PHOENIX_NODE} ${PHOENIX_OPENCLAW}`,
+      `&& ${PHOENIX_OPENCLAW_BIN}`,
       `agent --agent ${gwId}`,
       `--message "$MSG"`,
       sessionFlag,

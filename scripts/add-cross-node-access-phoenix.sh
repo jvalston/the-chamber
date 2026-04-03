@@ -4,18 +4,21 @@
 # and appends cross-node access instructions to each AGENTS.md
 #
 # Run in Phoenix WSL:
-#   bash /mnt/c/Users/natza/Desktop/mission-control/scripts/add-cross-node-access-phoenix.sh
+#   bash ./scripts/add-cross-node-access-phoenix.sh
 
-SSH_KEY_SRC="/home/natza/.ssh/lucy"
+SSH_KEY_SRC="${LUCY_SSH_KEY_SRC:-$HOME/.ssh/lucy}"
+PHOENIX_OPENCLAW_BIN="${PHOENIX_OPENCLAW_BIN:-/usr/bin/openclaw}"
+LUCY_SSH_USER="${LUCY_SSH_USER:-user}"
+LUCY_SSH_HOST="${LUCY_SSH_HOST:-127.0.0.1}"
 
 WORKSPACES=(
-  "/home/natza/.openclaw/workspace"            # Seraphim
-  "/home/natza/.openclaw/workspace-aurora"     # Aurora
-  "/home/natza/.openclaw/workspace-lumen"      # Lumen
-  "/home/natza/.openclaw/workspace-legend"     # Legend
-  "/home/natza/.openclaw/workspace-sentinel"   # Sentinel Phoenix
-  "/home/natza/.openclaw/workspace-kairo"      # Kairo
-  "/home/natza/.openclaw/workspace-veris"      # Veris
+  "$HOME/.openclaw/workspace"            # Seraphim
+  "$HOME/.openclaw/workspace-aurora"     # Aurora
+  "$HOME/.openclaw/workspace-lumen"      # Lumen
+  "$HOME/.openclaw/workspace-legend"     # Legend
+  "$HOME/.openclaw/workspace-sentinel"   # Sentinel Phoenix
+  "$HOME/.openclaw/workspace-kairo"      # Kairo
+  "$HOME/.openclaw/workspace-veris"      # Veris
 )
 
 CROSS_NODE_SECTION='
@@ -29,15 +32,15 @@ A copy of the SSH key is in your workspace as `lucy.key`.
 
 ### Connecting to Lucy
 
-- **User:** nana
-- **Host:** 100.119.215.107
+- **User:** $LUCY_SSH_USER
+- **Host:** $LUCY_SSH_HOST
 - **Key:** `lucy.key` (in your workspace root)
 
 ```bash
 ssh -i ~/path/to/workspace/lucy.key \
     -o StrictHostKeyChecking=no \
     -o ConnectTimeout=10 \
-    nana@100.119.215.107 \
+    $LUCY_SSH_USER@$LUCY_SSH_HOST \
     "command here"
 ```
 
@@ -46,8 +49,8 @@ ssh -i ~/path/to/workspace/lucy.key \
 ```bash
 ssh -i <your-workspace>/lucy.key \
     -o StrictHostKeyChecking=no \
-    nana@100.119.215.107 \
-    "/usr/bin/openclaw agent --agent <agent-id> --message \"your message\" --json"
+    $LUCY_SSH_USER@$LUCY_SSH_HOST \
+    "$PHOENIX_OPENCLAW_BIN agent --agent <agent-id> --message \"your message\" --json"
 ```
 
 ### Lucy Agent Roster

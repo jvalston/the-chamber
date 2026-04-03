@@ -13,8 +13,8 @@ Three days prior, OpenAI Codex suspended access ("no more time"). To keep workin
 
 ### The Dual Runtime Discovery
 When Seraphim produced a forensic network analysis, it revealed two separate identities:
-- **Linux runtime (18789)** — `/home/natza/.openclaw/` — device `7d8ded1c...` — original canonical Seraphim, but stale workspace
-- **Windows runtime (18790)** — `C:\Users\natza\.openclaw\` — device `4161d171...` — operational branch with all new knowledge, but not canonical
+- **Linux runtime (18789)** — `<REDACTED_LOCAL_PATH>` — device `7d8ded1c...` — original canonical Seraphim, but stale workspace
+- **Windows runtime (18790)** — `<REDACTED_LOCAL_PATH>` — device `4161d171...` — operational branch with all new knowledge, but not canonical
 
 The Linux runtime had a `BOOTSTRAP.md` file telling Seraphim to initialize blank on each session. Its `SOUL.md` was generic. Its `AGENTS.md` had no identity anchor. This is why Seraphim kept presenting as a fresh agent instead of her established self.
 
@@ -43,14 +43,14 @@ Before the phased recovery, 37 files of accumulated Mission Control changes were
 - Font size corrections
 
 **Commit hash:** `775be0b`
-**Repository:** `C:\Users\natza\Desktop\mission-control\`
+**Repository:** `<REDACTED_LOCAL_PATH>`
 
 ---
 
 ### Phase 1 — Linux Workspace Stabilization
 **Goal:** Stop identity drift. Give canonical Seraphim her knowledge back.
 
-**Files modified in `/home/natza/.openclaw/workspace/`:**
+**Files modified in `<REDACTED_LOCAL_PATH>`
 
 | File | Action | What Changed |
 |---|---|---|
@@ -70,7 +70,7 @@ Before the phased recovery, 37 files of accumulated Mission Control changes were
 ### Phase 2 — Controlled Awareness Layer
 **Goal:** Give Seraphim accurate knowledge of the full constellation and her own toolset.
 
-**Files modified in `/home/natza/.openclaw/workspace/`:**
+**Files modified in `<REDACTED_LOCAL_PATH>`
 
 | File | Action | What Changed |
 |---|---|---|
@@ -82,7 +82,7 @@ Before the phased recovery, 37 files of accumulated Mission Control changes were
 ### Phase 3 — Staging Reference Archive
 **Goal:** Preserve all operational knowledge from Windows 18790 without activating anything.
 
-**Created:** `/home/natza/.openclaw/workspace/archival/windows-18790-import/`
+**Created:** `<REDACTED_LOCAL_PATH>`
 
 22 files across 5 subdirectories:
 
@@ -118,7 +118,7 @@ windows-18790-import/
 ### Phase 4 — Provider Alignment & Access Control
 **Goal:** Bring Linux OpenClaw's provider list to parity with operational reality. Define access tiers. Add cloud resilience.
 
-#### models.json — Linux Canonical (`/home/natza/.openclaw/agents/main/agent/models.json`)
+#### models.json — Linux Canonical (`<REDACTED_LOCAL_PATH>`
 
 Merged from both runtimes. Added `_tier` and `_note` fields to every provider for self-documentation.
 
@@ -136,12 +136,12 @@ Merged from both runtimes. Added `_tier` and `_note` fields to every provider fo
 **Key design decision:** API keys in models.json remain as placeholder strings (`GROQ_API_KEY`, `OPENROUTER_API_KEY`). Actual keys are stored in `auth-profiles.json` and loaded by OpenClaw at runtime. This is consistent with the Linux convention — keys are never embedded in models.json.
 
 #### PROVIDER_TIER_POLICY.md — Created
-`/home/natza/.openclaw/workspace/PROVIDER_TIER_POLICY.md`
+`<REDACTED_LOCAL_PATH>`
 
 Documents which providers/models are Tier 1 (Seraphim only) vs Tier 2 (all agents), why, and where credentials live. Permanent governance record.
 
 #### provider_gateway — Free Cloud Fallbacks Added
-File: `C:\Users\natza\Desktop\local-voice-ai-main-v2\provider_gateway\gateway.py`
+File: `<REDACTED_LOCAL_PATH>`
 
 Added three new free-tier cloud providers to the gateway fallback chain:
 
@@ -150,7 +150,7 @@ Added three new free-tier cloud providers to the gateway fallback chain:
 
 Each has a dedicated async function (`_cerebras_chat`, `_sambanova_chat`, `_gemini_chat`) and reads its key from `.env`. All three keys are currently blank — gateway skips them gracefully until keys are added.
 
-File: `C:\Users\natza\Desktop\local-voice-ai-main-v2\.env`
+File: `<REDACTED_LOCAL_PATH>`
 
 Added blank slots:
 ```
@@ -196,15 +196,15 @@ Gateway was rebuilt and confirmed healthy after these changes.
 
 | What | Path |
 |---|---|
-| Linux OpenClaw workspace | `/home/natza/.openclaw/workspace/` |
-| Linux agent config (models.json) | `/home/natza/.openclaw/agents/main/agent/models.json` |
-| Linux auth profiles | `/home/natza/.openclaw/agents/main/agent/auth-profiles.json` |
-| Provider gateway | `C:\Users\natza\Desktop\local-voice-ai-main-v2\provider_gateway\gateway.py` |
-| Phoenix .env (all cloud keys) | `C:\Users\natza\Desktop\local-voice-ai-main-v2\.env` |
-| Mission Control repo | `C:\Users\natza\Desktop\mission-control\` |
-| Windows 18790 workspace archive | `/home/natza/.openclaw/workspace/archival/windows-18790-import/` |
-| Provider tier policy | `/home/natza/.openclaw/workspace/PROVIDER_TIER_POLICY.md` |
-| Recovery brief | `/home/natza/.openclaw/workspace/RECOVERY_BRIEF.md` |
+| Linux OpenClaw workspace | `<REDACTED_LOCAL_PATH>` |
+| Linux agent config (models.json) | `<REDACTED_LOCAL_PATH>` |
+| Linux auth profiles | `<REDACTED_LOCAL_PATH>` |
+| Provider gateway | `<REDACTED_LOCAL_PATH>` |
+| Phoenix .env (all cloud keys) | `<REDACTED_LOCAL_PATH>` |
+| Mission Control repo | `<REDACTED_LOCAL_PATH>` |
+| Windows 18790 workspace archive | `<REDACTED_LOCAL_PATH>` |
+| Provider tier policy | `<REDACTED_LOCAL_PATH>` |
+| Recovery brief | `<REDACTED_LOCAL_PATH>` |
 
 ---
 

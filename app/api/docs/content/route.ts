@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readFileSync, existsSync } from "fs";
-import { join, resolve, normalize, isAbsolute } from "path";
+import { join, normalize, isAbsolute } from "path";
 
 // Allowed root directories for local file reads.
 // Any path must resolve to one of these prefixes to be served.
-const ALLOWED_ROOTS = [
-  normalize("C:/Users/natza/.openclaw"),
-  normalize("C:/Users/natza/Desktop"),
-  normalize(join(process.cwd())),   // mission-control project root
-];
+const ALLOWED_ROOTS = (
+  process.env.DOCS_ALLOWED_ROOTS
+    ? process.env.DOCS_ALLOWED_ROOTS.split(",").map((p) => p.trim()).filter(Boolean)
+    : []
+).map((p) => normalize(p)).concat(normalize(join(process.cwd()))); // Always allow repo root
 
 function isSafePath(resolved: string): boolean {
   const norm = normalize(resolved);

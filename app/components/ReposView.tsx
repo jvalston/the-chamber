@@ -411,7 +411,7 @@ export default function ReposView() {
 
               <div>
                 <div style={labelStyle}>LOCAL PATH</div>
-                <input value={form.localPath ?? ""} onChange={(e) => setForm((f) => ({ ...f, localPath: e.target.value }))} placeholder="C:\Users\natza\Downloads\..." style={inputStyle} />
+                <input value={form.localPath ?? ""} onChange={(e) => setForm((f) => ({ ...f, localPath: e.target.value }))} placeholder="C:\\path\\to\\repo" style={inputStyle} />
               </div>
 
               <div style={{ display: "flex", gap: "12px" }}>

@@ -126,7 +126,7 @@ function ScanModal({ onClose, onImported }: { onClose: () => void; onImported: (
             <textarea
               value={extraPaths}
               onChange={(e) => setExtraPaths(e.target.value)}
-              placeholder={"C:\\Users\\natza\\Desktop\\other-project\\.env\n/home/nana/.openclaw/workspace/.env"}
+              placeholder={"C:\\path\\to\\project\\.env\n/home/user/project/.env"}
               rows={2}
               style={{ ...inputStyle, resize: "vertical" }}
             />
@@ -418,7 +418,7 @@ function KeyFormModal({
                 <label style={labelStyle}>TARGET FILE</label>
                 <input
                   {...field("targetFile")}
-                  placeholder="C:\..\.env.local or /home/natza/..."
+                  placeholder="C:\\path\\to\\.env.local or /home/user/..."
                   style={{ ...inputStyle, fontSize: "11px" }}
                 />
               </div>

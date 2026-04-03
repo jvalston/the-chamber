@@ -32,7 +32,7 @@ Effective immediately:
 
 **Remediated 2026-03-27:**
 - `~/.ssh/config` Host alias created on Phoenix WSL
-- `ssh lucy` now resolves to `nana@100.119.215.107` via `~/.ssh/lucy` key
+- `ssh lucy` now resolves to `nana@<REDACTED_PRIVATE_IP>` via `~/.ssh/lucy` key
 - Live connection verified (`ok`)
 - Cross-node governance actions re-enabled
 
