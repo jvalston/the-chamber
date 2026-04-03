@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mission Control
+
+Mission Control is a Next.js control plane for Constellation operations: stars/agent management, communications, approvals, memory, keys, docs, scripts, and translation.
+
+## For Developers
+
+- UI: `app/components/*` (tab views and system panels)
+- APIs: `app/api/*` (state + integrations)
+- Runtime data: `data/*`
+- Agent profiles: `agents/*`
+- Operations docs: `docs/*`
+- Utility scripts: `scripts/*`
+
+## Feature Diagram
+
+```mermaid
+flowchart TD
+  UI["Mission Control UI (Tabs + Panels)"] --> APIS["Next.js API Routes"]
+
+  APIS --> CORE["Core State APIs
+  - /api/agents
+  - /api/tasks
+  - /api/projects
+  - /api/repos
+  - /api/approvals
+  - /api/metrics
+  - /api/health"]
+
+  APIS --> OPS["Operations APIs
+  - /api/scripts
+  - /api/scripts/run
+  - /api/gateway/status
+  - /api/gateway/logs
+  - /api/gateway/cloud/*"]
+
+  APIS --> COMMS["Communications APIs
+  - /api/comms/send
+  - /api/comms/broadcast
+  - /api/comms/log
+  - /api/discord
+  - /api/translate"]
+
+  APIS --> KNOW["Knowledge + Memory APIs
+  - /api/docs
+  - /api/docs/content
+  - /api/memory
+  - /api/memory-layers
+  - /api/obsidian/[...path]"]
+
+  APIS --> KEYS["Secrets + Identity APIs
+  - /api/keys
+  - /api/keys/scan
+  - /api/keys/[id]/write
+  - /api/identities"]
+
+  CORE --> DATA["Local JSON Data (data/*)"]
+  KEYS --> DATA
+  COMMS --> DATA
+
+  OPS --> RUNTIME["WSL/Docker + OpenClaw Runtime"]
+  COMMS --> RUNTIME
+
+  UI --> AGENTS["Star/Agent Profiles (agents/*)"]
+```
+
+Full diagram doc: [`docs/FEATURES_DIAGRAM.md`](docs/FEATURES_DIAGRAM.md)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open `http://localhost:3030`.
