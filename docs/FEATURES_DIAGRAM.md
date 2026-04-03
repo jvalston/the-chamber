@@ -2,6 +2,8 @@
 
 This diagram is the quick map for developers onboarding to Mission Control.
 
+Related troubleshooting map: [`STAR_PROVIDER_FLOW.md`](./STAR_PROVIDER_FLOW.md)
+
 ```mermaid
 flowchart LR
   subgraph Frontend["Frontend (app/components)"]

@@ -63,7 +63,9 @@ flowchart TD
   UI --> AGENTS["Star/Agent Profiles (agents/*)"]
 ```
 
-Full diagram doc: [`docs/FEATURES_DIAGRAM.md`](docs/FEATURES_DIAGRAM.md)
+Full diagram docs:
+- [`docs/FEATURES_DIAGRAM.md`](docs/FEATURES_DIAGRAM.md)
+- [`docs/STAR_PROVIDER_FLOW.md`](docs/STAR_PROVIDER_FLOW.md)
 
 ## Getting Started
 
