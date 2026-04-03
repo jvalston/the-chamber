@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const scriptPath = join(SCRIPTS_DIR, safe);
 
   // Convert Windows path to WSL mount path
-  // e.g. C:\Users\natza\Desktop\... → /mnt/c/Users/natza/Desktop/...
+  // e.g. C:\path\to\... → /mnt/c/path/to/...
   const wslPath = scriptPath
     .replace(/^([A-Za-z]):\\/, (_, d) => `/mnt/${d.toLowerCase()}/`)
     .replace(/\\/g, "/");

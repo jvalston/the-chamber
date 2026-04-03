@@ -18,10 +18,9 @@ const ROSTER: Record<string, { node: "lucy" | "phoenix"; gwId: string }> = {
   veris:              { node: "phoenix", gwId: "veris"    },
 };
 
-const PHOENIX_NODE     = "/usr/bin/node";
-const PHOENIX_OPENCLAW = "/home/natza/.npm-global/lib/node_modules/openclaw/dist/index.js";
-const LUCY_SSH_HOST    = process.env.LUCY_SSH_HOST ?? "100.119.215.107";
-const LUCY_SSH_USER    = process.env.LUCY_SSH_USER ?? "nana";
+const PHOENIX_OPENCLAW_BIN = process.env.PHOENIX_OPENCLAW_BIN ?? "/usr/bin/openclaw";
+const LUCY_SSH_HOST    = process.env.LUCY_SSH_HOST ?? "127.0.0.1";
+const LUCY_SSH_USER    = process.env.LUCY_SSH_USER ?? "user";
 const LUCY_OPENCLAW    = "/usr/bin/openclaw";
 const LOG_PATH         = join(process.cwd(), "data", "comms-log.json");
 
@@ -57,7 +56,7 @@ function sendOne(item: BroadcastMessage): Promise<{
   if (node === "phoenix") {
     wslCmd = [
       `MSG=$(printf '%s' '${msgB64}' | base64 -d)`,
-      `&& ${PHOENIX_NODE} ${PHOENIX_OPENCLAW}`,
+      `&& ${PHOENIX_OPENCLAW_BIN}`,
       `agent --agent ${gwId}`,
       `--message "$MSG"`,
       sessionFlag,

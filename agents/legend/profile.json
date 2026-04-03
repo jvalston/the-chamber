@@ -22,7 +22,7 @@
   },
   "continuity": {
     "canonicalRecord": "github:jvalston/openclaw-workspace/LEGEND_CONTINUITY_RECORD.md",
-    "runtimeAnchorRef": "/home/natza/constellation-runtime/anchors/legend_anchor.yaml",
+    "runtimeAnchorRef": "constellation-runtime/anchors/legend_anchor.yaml",
     "anchorStagedAt": "openclaw-workspace/runtime-anchors/legend_anchor.yaml",
     "note": "Runtime anchor is lightweight and disposable. Canonical record on GitHub is authoritative. Pronoun resolved: he/him. Integrated into OpenClaw as a runtime agent 2026-03-24."
   }

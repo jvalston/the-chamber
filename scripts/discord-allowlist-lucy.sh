@@ -3,12 +3,12 @@
 # Sets all Discord accounts on Lucy to groupPolicy: allowlist
 # Run this FROM Phoenix WSL — it SSHes into Lucy and applies the changes
 #
-# Usage:  bash /mnt/c/Users/natza/Desktop/mission-control/scripts/discord-allowlist-lucy.sh
+# Usage:  bash ./scripts/discord-allowlist-lucy.sh
 
-LUCY_USER="nana"
-LUCY_HOST="100.119.215.107"
-LUCY_KEY="$HOME/.ssh/lucy"
-OPENCLAW="/usr/bin/openclaw"
+LUCY_USER="${LUCY_SSH_USER:-user}"
+LUCY_HOST="${LUCY_SSH_HOST:-127.0.0.1}"
+LUCY_KEY="${LUCY_SSH_KEY:-$HOME/.ssh/lucy}"
+OPENCLAW="${LUCY_OPENCLAW_BIN:-/usr/bin/openclaw}"
 
 ACCOUNTS=(
   sentinel

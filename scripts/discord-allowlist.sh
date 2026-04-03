@@ -3,9 +3,9 @@
 # Sets all Discord accounts on this machine to groupPolicy: allowlist
 # Run this in Phoenix WSL and again on Lucy WSL (via SSH)
 #
-# Usage:  bash /mnt/c/Users/natza/Desktop/mission-control/scripts/discord-allowlist.sh
+# Usage:  bash ./scripts/discord-allowlist.sh
 
-OPENCLAW="/usr/bin/node /home/natza/.npm-global/lib/node_modules/openclaw/dist/index.js"
+OPENCLAW="${OPENCLAW_BIN:-/usr/bin/openclaw}"
 
 ACCOUNTS=(
   lumen

@@ -4,18 +4,21 @@
 # Run FROM Phoenix WSL — it SSHes into Lucy and applies changes there
 #
 # Usage:
-#   bash /mnt/c/Users/natza/Desktop/mission-control/scripts/add-cross-node-access-lucy.sh
+#   bash ./scripts/add-cross-node-access-lucy.sh
 
-LUCY_USER="nana"
-LUCY_HOST="100.119.215.107"
-LUCY_KEY="$HOME/.ssh/lucy"
+LUCY_USER="${LUCY_SSH_USER:-user}"
+LUCY_HOST="${LUCY_SSH_HOST:-127.0.0.1}"
+LUCY_KEY="${LUCY_SSH_KEY:-$HOME/.ssh/lucy}"
+PHOENIX_SSH_USER="${PHOENIX_SSH_USER:-user}"
+PHOENIX_SSH_HOST="${PHOENIX_SSH_HOST:-127.0.0.1}"
+PHOENIX_OPENCLAW_BIN="${PHOENIX_OPENCLAW_BIN:-/usr/bin/openclaw}"
 
 WORKSPACES=(
-  "/home/nana/.openclaw/workspace"            # Sentinel Lucy
-  "/home/nana/.openclaw/workspace-diamond"    # Diamond
-  "/home/nana/.openclaw/workspace-elior"      # Elior
-  "/home/nana/.openclaw/workspace-aurelion"   # Aurelion
-  "/home/nana/.openclaw/workspace-atlas"      # Atlas
+  "$HOME/.openclaw/workspace"            # Sentinel Lucy
+  "$HOME/.openclaw/workspace-diamond"    # Diamond
+  "$HOME/.openclaw/workspace-elior"      # Elior
+  "$HOME/.openclaw/workspace-aurelion"   # Aurelion
+  "$HOME/.openclaw/workspace-atlas"      # Atlas
 )
 
 CROSS_NODE_SECTION='
@@ -28,8 +31,8 @@ You can reach agents on **Phoenix** (the other constellation node) via SSH.
 
 ### Connecting to Phoenix
 
-- **User:** natza
-- **Host:** 100.88.244.100
+- **User:** $PHOENIX_SSH_USER
+- **Host:** $PHOENIX_SSH_HOST
 - **Key:** Use the phoenix key if available in your workspace (`phoenix.key`), or ask your operator to set up reverse SSH access.
 
 ### Sending a message to a Phoenix agent
@@ -37,8 +40,8 @@ You can reach agents on **Phoenix** (the other constellation node) via SSH.
 ```bash
 ssh -i <your-workspace>/phoenix.key \
     -o StrictHostKeyChecking=no \
-    natza@100.88.244.100 \
-    "/usr/bin/node /home/natza/.npm-global/lib/node_modules/openclaw/dist/index.js agent --agent <agent-id> --message \"your message\" --json"
+    $PHOENIX_SSH_USER@$PHOENIX_SSH_HOST \
+    "$PHOENIX_OPENCLAW_BIN agent --agent <agent-id> --message \"your message\" --json"
 ```
 
 ### Phoenix Agent Roster
@@ -97,5 +100,5 @@ echo "Lucy agents updated."
 echo ""
 echo "NOTE: Lucy agents reaching Phoenix requires a phoenix SSH key on Lucy."
 echo "To set that up, run from Phoenix WSL:"
-echo "  ssh-copy-id -i ~/.ssh/id_rsa.pub natza@100.88.244.100  (if you have a key on Lucy)"
+echo "  ssh-copy-id -i ~/.ssh/id_rsa.pub $PHOENIX_SSH_USER@$PHOENIX_SSH_HOST  (if you have a key on Lucy)"
 echo "Or copy your Phoenix public key to Lucy manually."
