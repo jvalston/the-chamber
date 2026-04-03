@@ -1,8 +1,8 @@
 # Mission Control
 
-Mission Control is an operations cockpit for running a multi-agent constellation from one place.
-It is built for operators, founders, and technical teams coordinating stars/agents across comms, memory, keys, approvals, and runtime controls.
-It solves the fragmentation problem: instead of jumping between tools and terminals, you get one control plane for visibility, routing, and recovery.
+Mission Control is a control plane for multi-agent operations.
+It is for operators and technical teams coordinating stars/agents across comms, memory, keys, approvals, and runtime controls.
+It replaces fragmented tool-switching with one place to see status, route work, and recover fast.
 
 ## Quick Start (2 Minutes)
 
@@ -15,13 +15,13 @@ Open `http://localhost:3030`.
 
 ## Demo
 
-Add a screenshot or GIF here so visitors instantly see the product:
+Add one screenshot or short GIF so visitors can feel the product quickly.
 
-- Suggested path: `docs/assets/mission-control-demo.gif`
-- Suggested size: 1400x900 (or similar 16:9)
-- Keep duration short: 8 to 20 seconds
+- Path: `docs/assets/mission-control-demo.gif`
+- Size: ~1400x900 (16:9)
+- Length: 8 to 20 seconds
 
-Example embed line to use after you add the file:
+Embed:
 
 ```md
 ![Mission Control Demo](docs/assets/mission-control-demo.gif)
