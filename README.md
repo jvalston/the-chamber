@@ -1,6 +1,8 @@
 # Mission Control
 
-Mission Control is a Next.js control plane for Constellation operations: stars/agent management, communications, approvals, memory, keys, docs, scripts, and translation.
+Mission Control is an operations cockpit for running a multi-agent constellation from one place.
+It is built for operators, founders, and technical teams coordinating stars/agents across comms, memory, keys, approvals, and runtime controls.
+It solves the fragmentation problem: instead of jumping between tools and terminals, you get one control plane for visibility, routing, and recovery.
 
 ## For Developers
 
