@@ -53,7 +53,7 @@ function entryToLog(e: GwEntry, id: number): LogEntry {
 }
 
 const SEED: Omit<LogEntry, "id">[] = [
-  { ts: "–", level: "sys",  msg: "Mission Control initialized" },
+  { ts: "–", level: "sys",  msg: "The Chamber initialized" },
   { ts: "–", level: "sys",  msg: "Connecting to provider gateway…" },
 ];
 

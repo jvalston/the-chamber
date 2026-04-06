@@ -8,8 +8,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LEGEND // MISSION CONTROL",
-  description: "Legend AI Mission Control Panel",
+  title: "LEGEND // THE CHAMBER",
+  description: "Legend AI The Chamber",
 };
 
 export default function RootLayout({

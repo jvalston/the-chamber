@@ -45,7 +45,7 @@ function guessBelongsTo(name: string): string {
   for (const agent of AGENT_NAMES) {
     if (upper.includes(agent)) return agent.charAt(0) + agent.slice(1).toLowerCase();
   }
-  if (/MISSION.?CONTROL|MC_/i.test(name)) return "Mission Control";
+  if (/THE.?CHAMBER|TC_|MISSION.?CONTROL|MC_/i.test(name)) return "The Chamber";
   if (/OPENCLAW/i.test(name))             return "OpenClaw";
   return "";
 }
