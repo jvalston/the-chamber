@@ -1,0 +1,114 @@
+{
+  "polls": [
+    {
+      "id": "poll-1775135929189",
+      "question": "Which initiative should be prioritized next based on current system needs?",
+      "options": [
+        {
+          "id": "opt-0",
+          "label": "Voice pipeline stabilization",
+          "votes": []
+        },
+        {
+          "id": "opt-1",
+          "label": "Agent reliability + timeout fixes",
+          "votes": [
+            "seraphim",
+            "aurora",
+            "legend",
+            "sentinel",
+            "kairo",
+            "veris",
+            "persephone",
+            "atlas",
+            "elior",
+            "aurelion",
+            "diamond",
+            "olympus",
+            "lumen",
+            "hermes"
+          ]
+        },
+        {
+          "id": "opt-2",
+          "label": "Knowledge base ingestion system",
+          "votes": []
+        },
+        {
+          "id": "opt-3",
+          "label": "Mission Control integration polish",
+          "votes": []
+        }
+      ],
+      "type": "single",
+      "status": "closed",
+      "channel": "polls",
+      "createdBy": "origin",
+      "createdAt": "2026-04-02T13:18:49.188Z",
+      "closesAt": "2026-04-07T13:18:49.188Z",
+      "postedToDiscord": true,
+      "discordMessageId": "1489252836486414418",
+      "discordChannelId": "1487755335367393392"
+    },
+    {
+      "id": "poll-draft-1775135929189",
+      "question": "Fill in your next poll question here\u2026",
+      "options": [
+        {
+          "id": "opt-0",
+          "label": "Option 1",
+          "votes": []
+        },
+        {
+          "id": "opt-1",
+          "label": "Option 2",
+          "votes": []
+        },
+        {
+          "id": "opt-2",
+          "label": "Option 3",
+          "votes": []
+        },
+        {
+          "id": "opt-3",
+          "label": "Option 4",
+          "votes": []
+        }
+      ],
+      "type": "single",
+      "status": "draft",
+      "channel": "polls",
+      "createdBy": "origin",
+      "createdAt": "2026-04-02T13:18:49.188Z",
+      "closesAt": "2026-04-03T13:18:49.188Z",
+      "postedToDiscord": false
+    }
+  ],
+  "activity": [
+    {
+      "id": "a1775307600000",
+      "text": "Poll reconciliation applied: Hermes vote restored after earlier Comms omission. Final record corrected to 14/14 unanimous for Agent reliability + timeout fixes.",
+      "ts": "2026-04-04T06:00:00.000Z"
+    },
+    {
+      "id": "a1775135929190",
+      "text": "Poll closed. Final result: 14/14 stars voted — Agent reliability + timeout fixes wins unanimously.",
+      "ts": "2026-04-04T00:00:00.000Z"
+    },
+    {
+      "id": "a1775135929189",
+      "text": "Polls cleaned: archived old polls, created fresh repost + fillable draft.",
+      "ts": "2026-04-02T13:18:49.188Z"
+    },
+    {
+      "id": "a1774777752160",
+      "text": "Poll created: \"Which initiative should be prioritized next based on current system needs?\"",
+      "ts": "2026-03-29T09:49:12.160Z"
+    },
+    {
+      "id": "a001",
+      "text": "Poll created: \"Which initiative should be prioritized next...\"",
+      "ts": "2026-03-29T00:00:00.000Z"
+    }
+  ]
+}

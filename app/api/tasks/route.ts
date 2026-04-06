@@ -71,6 +71,11 @@ export async function POST(req: NextRequest) {
     status: "backlog",
     project: body.project ?? "",
     createdAt: new Date().toISOString().slice(0, 10),
+    ...(body.source        ? { source:            body.source        } : {}),
+    ...(body.source_title ? { source_title:      body.source_title  } : {}),
+    ...(body.source_url   ? { source_url:        body.source_url    } : {}),
+    ...(body.source_type  ? { source_type:       body.source_type   } : {}),
+    ...(body.source_confidence ? { source_confidence: body.source_confidence } : {}),
   };
   data.tasks.unshift(task);
   data.activity = [

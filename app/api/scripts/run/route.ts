@@ -5,10 +5,15 @@ import { join, basename }            from "path";
 const SCRIPTS_DIR = join(process.cwd(), "scripts");
 
 // POST /api/scripts/run
-// Body: { file: "discord-allowlist.sh" }
+// Body: { file: "discord-allowlist.sh", args?: ["arg1","arg2"] }
 export async function POST(req: NextRequest) {
-  const body = await req.json().catch(() => ({})) as { file?: string };
+  const body = await req.json().catch(() => ({})) as { file?: string; args?: string[] };
   const file = body.file?.trim();
+  const rawArgs = Array.isArray(body.args) ? body.args : [];
+  const args = rawArgs
+    .map((a) => String(a ?? "").trim())
+    .filter((a) => a.length > 0)
+    .slice(0, 8);
 
   if (!file) {
     return NextResponse.json({ error: "file is required" }, { status: 400 });
@@ -36,9 +41,9 @@ export async function POST(req: NextRequest) {
     let proc: ReturnType<typeof spawn>;
 
     if (ext === "sh") {
-      proc = spawn("wsl", ["-e", "bash", wslPath], { timeout: 300_000 });
+      proc = spawn("wsl", ["-e", "bash", wslPath, ...args], { timeout: 300_000 });
     } else if (ext === "mjs" || ext === "js") {
-      proc = spawn("node", [scriptPath], { timeout: 300_000 });
+      proc = spawn("node", [scriptPath, ...args], { timeout: 300_000 });
     } else {
       resolve(NextResponse.json({ error: "Unsupported script type" }, { status: 400 }));
       return;

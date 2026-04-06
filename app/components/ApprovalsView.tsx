@@ -15,6 +15,7 @@ interface ApprovalItem {
   created:     string;
   category:    string;
   resolvedAt?: string;
+  meta?: Record<string, string>;
 }
 
 const PRIORITY_COLOR: Record<ApprovalPriority, string> = {
@@ -68,8 +69,9 @@ export default function ApprovalsView() {
     finally { setActing(null); }
   }
 
-  const pending  = items.filter((a) => a.status === "pending");
-  const resolved = items.filter((a) => a.status !== "pending");
+  const pending     = items.filter((a) => a.status === "pending");
+  const gapRequests = pending.filter((a) => a.category === "agent-gap");
+  const resolved    = items.filter((a) => a.status !== "pending");
 
   if (loading) {
     return (
@@ -81,6 +83,32 @@ export default function ApprovalsView() {
 
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "8px", gap: "8px", overflowY: "auto" }}>
+
+      {/* Agent Gap Requests — Seraphim escalations */}
+      {gapRequests.length > 0 && (
+        <div className="panel" style={{ flexShrink: 0, borderColor: "rgba(255,120,50,0.35)" }}>
+          <div className="panel-header" style={{ justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span className="status-dot" style={{ background: "var(--red)" }} />
+              AGENT READINESS GAPS
+            </div>
+            <span style={{ color: "var(--red)", fontWeight: 600, fontSize: "11px" }}>
+              {gapRequests.length} flagged by Seraphim
+            </span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+            {gapRequests.map((item) => (
+              <ApprovalCard
+                key={item.id}
+                item={item}
+                busy={acting === item.id}
+                onAct={act}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Pending */}
       <div className="panel" style={{ flexShrink: 0 }}>
         <div className="panel-header" style={{ justifyContent: "space-between" }}>
@@ -89,16 +117,16 @@ export default function ApprovalsView() {
             PENDING APPROVALS
           </div>
           <span style={{ color: "var(--yellow)", fontWeight: 600, fontSize: "11px" }}>
-            {pending.length} awaiting
+            {pending.filter((a) => a.category !== "agent-gap").length} awaiting
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-          {pending.length === 0 ? (
+          {pending.filter((a) => a.category !== "agent-gap").length === 0 ? (
             <div style={{ padding: "14px", fontSize: "11px", color: "var(--text-muted)" }}>
               No pending approvals
             </div>
           ) : (
-            pending.map((item) => (
+            pending.filter((a) => a.category !== "agent-gap").map((item) => (
               <ApprovalCard
                 key={item.id}
                 item={item}
@@ -133,6 +161,51 @@ export default function ApprovalsView() {
   );
 }
 
+const GAP_PRIORITY_COLOR: Record<string, string> = {
+  blocking: "var(--red)",
+  degraded: "var(--yellow)",
+  advisory: "var(--text-muted)",
+};
+
+function GapReportBlock({ meta }: { meta: Record<string, string> }) {
+  const rows: [string, string][] = [
+    ["Agent",        meta.agent        ?? "—"],
+    ["Node",         meta.node         ?? "—"],
+    ["Assigned role",meta.assignedRole ?? "—"],
+    ["Missing",      meta.missing      ?? "—"],
+    ["Impact",       meta.impact       ?? "—"],
+    ["Fix",          meta.recommendedFix ?? "—"],
+  ];
+  const gapColor = GAP_PRIORITY_COLOR[meta.gapPriority ?? "advisory"] ?? "var(--text-muted)";
+
+  return (
+    <div style={{
+      marginTop:    "8px",
+      padding:      "8px 10px",
+      background:   "rgba(255,80,50,0.06)",
+      border:       "1px solid rgba(255,80,50,0.18)",
+      borderRadius: "3px",
+      fontSize:     "10px",
+      lineHeight:   1.6,
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+        <span style={{ color: "var(--text-muted)", letterSpacing: "0.08em", fontSize: "9px" }}>GAP REPORT</span>
+        {meta.gapPriority && (
+          <span style={{ color: gapColor, letterSpacing: "0.08em", fontSize: "9px", fontWeight: 600 }}>
+            {meta.gapPriority.toUpperCase()}
+          </span>
+        )}
+      </div>
+      {rows.map(([label, value]) => (
+        <div key={label} style={{ display: "flex", gap: "8px" }}>
+          <span style={{ color: "var(--text-muted)", width: "90px", flexShrink: 0 }}>{label}</span>
+          <span style={{ color: "var(--text-secondary)" }}>{value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ApprovalCard({
   item,
   busy,
@@ -142,7 +215,8 @@ function ApprovalCard({
   busy:  boolean;
   onAct: (id: string, status: ApprovalStatus) => void;
 }) {
-  const pc        = PRIORITY_COLOR[item.priority];
+  const isGap     = item.category === "agent-gap";
+  const pc        = isGap ? "var(--red)" : PRIORITY_COLOR[item.priority];
   const sc        = STATUS_COLOR[item.status];
   const isPending = item.status === "pending";
 
@@ -164,13 +238,16 @@ function ApprovalCard({
           <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--text-primary)", marginBottom: "3px" }}>
             {item.title}
           </div>
-          <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: "6px" }}>
-            {item.description}
-          </div>
+          {/* Plain description — shown for non-gap items or when no meta */}
+          {(!isGap || !item.meta) && (
+            <div style={{ fontSize: "11px", color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: "6px" }}>
+              {item.description}
+            </div>
+          )}
           <div style={{ display: "flex", gap: "12px", fontSize: "10px", color: "var(--text-muted)" }}>
             <span>Requested by <span style={{ color: "var(--text-secondary)" }}>{item.requestedBy}</span></span>
             <span>{createdLabel}</span>
-            <span style={{ color: "var(--accent-dim)" }}>{item.category}</span>
+            <span style={{ color: isGap ? "rgba(255,100,60,0.9)" : "var(--accent-dim)" }}>{item.category}</span>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
@@ -185,10 +262,13 @@ function ApprovalCard({
             {item.status.toUpperCase()}
           </span>
           <span style={{ fontSize: "9px", color: pc, letterSpacing: "0.06em" }}>
-            {item.priority.toUpperCase()}
+            {isGap ? (item.meta?.gapPriority ?? item.priority).toUpperCase() : item.priority.toUpperCase()}
           </span>
         </div>
       </div>
+
+      {/* Structured gap report block */}
+      {isGap && item.meta && <GapReportBlock meta={item.meta} />}
 
       {isPending && (
         <div style={{ display: "flex", gap: "6px", marginTop: "10px" }}>

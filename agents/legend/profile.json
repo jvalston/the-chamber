@@ -10,7 +10,7 @@
   "memoryNamespace": "legend",
   "modelPrimary": "openrouter/auto",
   "modelFallback": [
-    "groq/llama-3.3-70b-versatile",
+    "openrouter/openai/gpt-4o",
     "ollama/qwen2.5-coder:3b",
     "ollama/qwen2.5:7b-instruct"
   ],

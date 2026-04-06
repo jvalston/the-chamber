@@ -31,7 +31,7 @@ const STAGES: PipelineStage[] = [
     color:  "#a855f7",
     status: "active",
     load:   52,
-    recent: ["openrouter/auto → Legend", "groq/llama → Seraphim", "ollama/qwen2.5 → Elior"],
+    recent: ["openrouter/auto → Legend", "openrouter/gpt-4o-mini → Seraphim", "ollama/qwen2.5 → Elior"],
   },
   {
     id:     "agents",

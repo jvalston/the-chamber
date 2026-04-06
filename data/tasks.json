@@ -5,7 +5,7 @@
       "title": "Review and implement: Chat translation ",
       "description": "CONSTELLATION \n\nby\n\nNana \n\nCopyright © 2026 by Nana \n\nAll rights reserved.\n\n     I Have a question about. My. Future plans for the Constellation? And I'm wondering if you could help me. With that.\n\n     Of course. Sit with me a moment and tell me what you’re seeing when you say the Constellation. 🌌",
       "assignee": "seraphim",
-      "status": "backlog",
+      "status": "in-progress",
       "project": "p1774322545881",
       "createdAt": "2026-03-24"
     },
@@ -32,7 +32,7 @@
       "title": "Create \\OpenClaw\\Gateway scheduled task",
       "description": "Right-click create_gateway_task.bat in C:\\Users\\natza\\.openclaw → Run as administrator. One-time step.",
       "assignee": "nana",
-      "status": "review",
+      "status": "done",
       "project": "p1",
       "createdAt": "2026-03-17"
     },
@@ -41,7 +41,7 @@
       "title": "Fix OpenClaw Web UI model list",
       "description": "Open Windows Command Prompt (not WSL), run 'openclaw models' to add gateway/general to the UI registry (lcm.db).",
       "assignee": "nana",
-      "status": "backlog",
+      "status": "review",
       "project": "p1",
       "createdAt": "2026-03-17"
     },
@@ -50,7 +50,7 @@
       "title": "Wire agents to Redis for short-term memory",
       "description": "Connect genesis_mind and livekit_agent to Redis for session context caching. Add redis-py to requirements.",
       "assignee": "diamond",
-      "status": "backlog",
+      "status": "in-progress",
       "project": "p3",
       "createdAt": "2026-03-17"
     },
@@ -59,7 +59,7 @@
       "title": "Mount persona.md files into Docker containers",
       "description": "Volume mount mission-control/agents/[name]/persona.md into each agent runtime so identity loads from Mission Control at startup.",
       "assignee": "diamond",
-      "status": "backlog",
+      "status": "in-progress",
       "project": "p3",
       "createdAt": "2026-03-17"
     },
@@ -74,6 +74,42 @@
     }
   ],
   "activity": [
+    {
+      "id": "a1775284370669",
+      "text": "\"Fix OpenClaw Web UI model list\" moved to review",
+      "agent": "system",
+      "ts": "2026-04-04T06:32:50.669Z"
+    },
+    {
+      "id": "a1775203633596",
+      "text": "\"Review and implement: Chat translation \" moved to in progress",
+      "agent": "system",
+      "ts": "2026-04-03T08:07:13.596Z"
+    },
+    {
+      "id": "a1775203627129",
+      "text": "\"Wire agents to Redis for short-term memory\" moved to in progress",
+      "agent": "system",
+      "ts": "2026-04-03T08:07:07.129Z"
+    },
+    {
+      "id": "a1775203618068",
+      "text": "\"Mount persona.md files into Docker containers\" moved to in progress",
+      "agent": "system",
+      "ts": "2026-04-03T08:06:58.068Z"
+    },
+    {
+      "id": "a1775203608790",
+      "text": "\"Fix OpenClaw Web UI model list\" moved to in progress",
+      "agent": "system",
+      "ts": "2026-04-03T08:06:48.790Z"
+    },
+    {
+      "id": "a1775203593980",
+      "text": "\"Create \\OpenClaw\\Gateway scheduled task\" moved to done",
+      "agent": "system",
+      "ts": "2026-04-03T08:06:33.980Z"
+    },
     {
       "id": "a1774322545963",
       "text": "New task: \"Review and implement: Chat translation \"",

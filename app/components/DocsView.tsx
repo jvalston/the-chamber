@@ -37,7 +37,7 @@ const FORMAT_COLOR: Record<string, string> = {
 };
 
 const AGENT_INITIAL: Record<string, string> = {
-  legend: "L", seraphim: "S", diamond: "D", elior: "E", nana: "N", unknown: "·",
+  legend: "L", seraphim: "S", diamond: "D", elior: "E", nana: "O", origin: "O", unknown: "·",
 };
 
 // Very simple markdown renderer — headings, bold, lists, code blocks

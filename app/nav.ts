@@ -8,14 +8,14 @@ export type View =
   // Operations
   | "tasks" | "projects" | "calendar" | "pipeline"
   // Intelligence
-  | "memory" | "docs" | "repos" | "inbox"
+  | "memory" | "docs" | "repos" | "inbox" | "transcript" | "notes"
   // Comms
-  | "comms" | "discord"
+  | "comms" | "discord" | "polls"
   // Structure
-  | "team" | "office" | "approvals" | "council" | "people"
+  | "team" | "office" | "approvals" | "council" | "people" | "star-tools"
   // Growth
   | "radar" | "content" | "factory" | "feedback"
-  | "keys" | "scripts" | "translate";
+  | "keys" | "scripts" | "translate" | "telegram";
 
 interface NavItem    { id: View; label: string; }
 interface NavSection { label: string; items: NavItem[]; }
@@ -41,12 +41,18 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     label: "INTELLIGENCE",
     items: [
-      { id: "memory", label: "Memory"     },
-      { id: "docs",   label: "Docs"       },
-      { id: "repos",  label: "Blueprints" },
-      { id: "inbox",  label: "Inbox"      },
-      { id: "comms",   label: "Comms"   },
-      { id: "discord", label: "Discord" },
+      { id: "memory",     label: "Memory"       },
+      { id: "docs",       label: "Docs"         },
+      { id: "repos",      label: "Blueprints"   },
+      { id: "inbox",      label: "Inbox"        },
+      { id: "transcript", label: "Transcripts"  },
+      { id: "notes",      label: "Notes Bridge" },
+      { id: "comms",      label: "Comms"        },
+      { id: "scripts",    label: "Scripts"      },
+      { id: "translate",  label: "Translator"   },
+      { id: "discord",    label: "Discord"      },
+      { id: "polls",      label: "Polls"        },
+      { id: "telegram",   label: "Telegram"     },
     ],
   },
   {
@@ -54,6 +60,7 @@ export const NAV_SECTIONS: NavSection[] = [
     items: [
       { id: "team",      label: "Team"      },
       { id: "office",    label: "Office"    },
+      { id: "star-tools",label: "Star Tools"},
       { id: "approvals", label: "Approvals" },
       { id: "council",   label: "Council"   },
       { id: "people",    label: "People"    },
@@ -71,9 +78,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     label: "SYSTEM",
     items: [
-      { id: "keys",       label: "Keys"       },
-      { id: "scripts",    label: "Scripts"    },
-      { id: "translate",  label: "Translator" },
+      { id: "keys", label: "Keys" },
     ],
   },
 ];

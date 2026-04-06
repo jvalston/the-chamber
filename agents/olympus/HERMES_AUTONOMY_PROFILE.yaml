@@ -1,0 +1,46 @@
+profile:
+  name: hermes_style_controlled_autonomy
+  owner: olympus
+  version: 1
+
+behavior:
+  mode: controlled_intake
+  intent: intake_filter_route
+  autonomy_level: medium_high
+
+schedule:
+  enabled: true
+  interval_minutes: 45
+  max_signals_per_cycle: 3
+
+filter_gate:
+  type: two_of_three
+  conditions:
+    - relevance
+    - impact
+    - recurrence
+
+suppression:
+  duplicate_window_minutes: 120
+  ignore_low_engagement: true
+
+routing:
+  success:
+    handoff_to:
+      - hermes
+  no_signal:
+    action: silent
+  error:
+    action: escalate
+    escalate_to:
+      - sentinel
+
+provider:
+  primary: openrouter/openai/gpt-4o-mini
+  fallback:
+    - openai-codex/gpt-5.4
+    - openrouter/auto
+
+observability:
+  trace: true
+  packet_format: signal_packet

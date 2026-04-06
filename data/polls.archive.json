@@ -1,0 +1,78 @@
+{
+  "archived": [
+    {
+      "id": "poll-1774777752159",
+      "question": "Which initiative should be prioritized next based on current system needs?",
+      "options": [
+        {
+          "id": "opt-0",
+          "label": "1️⃣ Voice pipeline stabilization",
+          "votes": []
+        },
+        {
+          "id": "opt-1",
+          "label": "2️⃣ Agent reliability + timeout fixes",
+          "votes": []
+        },
+        {
+          "id": "opt-2",
+          "label": "3️⃣ Knowledge base ingestion system",
+          "votes": []
+        },
+        {
+          "id": "opt-3",
+          "label": "4️⃣ Mission Control integration polish",
+          "votes": []
+        }
+      ],
+      "type": "single",
+      "status": "open",
+      "channel": "polls",
+      "createdBy": "origin",
+      "createdAt": "2026-03-29T09:49:12.160Z",
+      "postedToDiscord": true,
+      "closesAt": "2026-03-30T09:49:12.159Z",
+      "discordMessageId": "1489244710743838831",
+      "discordChannelId": "1487755335367393392",
+      "archivedAt": "2026-04-02T13:18:49.188Z",
+      "archiveReason": "cleanup-before-repost"
+    },
+    {
+      "id": "poll-001",
+      "question": "Which initiative should be prioritized next based on current system needs?",
+      "options": [
+        {
+          "id": "opt-0",
+          "label": "Voice pipeline stabilization",
+          "votes": []
+        },
+        {
+          "id": "opt-1",
+          "label": "Agent reliability + timeout fixes",
+          "votes": []
+        },
+        {
+          "id": "opt-2",
+          "label": "Knowledge base ingestion system",
+          "votes": []
+        },
+        {
+          "id": "opt-3",
+          "label": "Mission Control integration polish",
+          "votes": []
+        }
+      ],
+      "type": "single",
+      "status": "closed",
+      "channel": "polls",
+      "createdBy": "origin",
+      "createdAt": "2026-03-29T00:00:00.000Z",
+      "closesAt": "2026-03-30T00:00:00.000Z",
+      "postedToDiscord": true,
+      "discordMessageId": "1488507282336514078",
+      "discordChannelId": "1487755335367393392",
+      "archivedAt": "2026-04-02T13:18:49.188Z",
+      "archiveReason": "cleanup-before-repost"
+    }
+  ]
+}

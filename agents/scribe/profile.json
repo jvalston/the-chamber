@@ -9,8 +9,8 @@
   "parent": "elior",
   "transport": ["Discord", "local"],
   "memoryNamespace": "scribe",
-  "modelPrimary": "groq/llama-3.3-70b-versatile",
-  "modelFallback": ["openrouter/auto"],
+  "modelPrimary": "openrouter/openai/gpt-4o-mini",
+  "modelFallback": ["ollama/qwen2.5:7b-instruct"],
   "tools": ["memory-read", "doc-search", "blueprint-write"],
   "discord": {
     "status": "active",

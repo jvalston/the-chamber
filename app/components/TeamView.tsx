@@ -31,6 +31,7 @@ const AGENT_ACCENT: Record<string, string> = {
   elior:    "#a78bfa",
   atlas:    "#38bdf8",
   aurora:   "#fb923c",
+  hermes:   "#60a5fa",
 };
 
 const NODE_COLOR: Record<string, string> = {
@@ -118,8 +119,8 @@ function AgentCard({ agent }: { agent: typeof ACTIVE_AGENTS[0] }) {
       borderTop:     `2px solid ${sc}`,
       borderRadius:  "4px",
       overflow:      "hidden",
-      flex:          1,
-      minWidth:      0,
+      flex:          "0 0 220px",
+      minWidth:      "220px",
     }}>
       {/* Photo */}
       <div style={{ position: "relative", width: "100%", height: "110px", background: "rgba(0,0,0,0.4)", flexShrink: 0 }}>
@@ -408,7 +409,7 @@ export default function TeamView() {
             — {ACTIVE_AGENTS.length} online
           </span>
         </div>
-        <div style={{ padding: "10px", display: "flex", gap: "8px" }}>
+        <div style={{ padding: "10px", display: "flex", gap: "8px", overflowX: "auto", overflowY: "hidden" }}>
           {ACTIVE_AGENTS.map((a) => <AgentCard key={a.id} agent={a} />)}
         </div>
       </div>

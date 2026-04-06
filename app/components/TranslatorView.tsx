@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 export default function TranslatorView() {
   const [input,       setInput]       = useState("");
   const [output,      setOutput]      = useState("");
+  const [provider,    setProvider]    = useState("");
   const [loading,     setLoading]     = useState(false);
   const [error,       setError]       = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -13,6 +14,7 @@ export default function TranslatorView() {
     if (!input.trim()) return;
     setLoading(true);
     setOutput("");
+    setProvider("");
     setError("");
     try {
       const r = await fetch("/api/translate", {
@@ -21,8 +23,11 @@ export default function TranslatorView() {
         body:    JSON.stringify({ text: input }),
       });
       const d = await r.json();
-      if (d.error) setError(d.error);
-      else         setOutput(d.translation ?? "");
+      if (d.error) setError(`${d.error}${d.attempted?.length ? `\nTried: ${d.attempted.join(" -> ")}` : ""}`);
+      else {
+        setOutput(d.translation ?? "");
+        setProvider(d.provider && d.model ? `${d.provider} · ${d.model}` : "");
+      }
     } catch (e) {
       setError(String(e));
     }
@@ -32,6 +37,7 @@ export default function TranslatorView() {
   function clear() {
     setInput("");
     setOutput("");
+    setProvider("");
     setError("");
     textareaRef.current?.focus();
   }
@@ -121,6 +127,11 @@ export default function TranslatorView() {
       <div className="panel" style={{ display: "flex", flexDirection: "column" }}>
         <div className="panel-header">
           PLAIN ENGLISH
+          {provider && (
+            <span style={{ marginLeft: "auto", marginRight: "8px", fontSize: "9px", color: "var(--text-muted)", fontWeight: 400 }}>
+              {provider}
+            </span>
+          )}
           {output && (
             <button
               onClick={() => navigator.clipboard.writeText(output)}
@@ -173,13 +184,15 @@ export default function TranslatorView() {
                 fontSize:   "11px",
                 color:      "var(--red)",
                 lineHeight: 1.6,
+                whiteSpace: "pre-wrap",
                 padding:    "10px",
                 border:     "1px solid rgba(255,100,100,0.2)",
                 borderRadius:"2px",
                 background: "rgba(255,0,0,0.05)",
               }}
             >
-              Could not translate — Ollama may be busy or offline.<br />
+              Could not translate with available providers.
+              <br />
               <span style={{ color: "var(--text-muted)", fontSize: "10px" }}>{error}</span>
             </div>
           )}

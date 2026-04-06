@@ -31,6 +31,7 @@ const PROVIDER_MAP: [RegExp, string][] = [
 const AGENT_NAMES = [
   "LEGEND", "SENTINEL", "SERAPHIM", "AURORA", "LUMEN",
   "DIAMOND", "ELIOR", "AURELION", "ATLAS", "KAIRO", "VERIS",
+  "PERSEPHONE", "OLYMPUS", "HERMES",
 ];
 
 function guessProvider(name: string): string {
@@ -45,7 +46,7 @@ function guessBelongsTo(name: string): string {
   for (const agent of AGENT_NAMES) {
     if (upper.includes(agent)) return agent.charAt(0) + agent.slice(1).toLowerCase();
   }
-  if (/MISSION.?CONTROL|MC_/i.test(name)) return "Mission Control";
+  if (/THE.?CHAMBER|TC_/i.test(name)) return "The Chamber";
   if (/OPENCLAW/i.test(name))             return "OpenClaw";
   return "";
 }
@@ -118,6 +119,8 @@ const DEFAULT_PATHS = [
   "\\\\wsl.localhost\\Ubuntu\\home\\natza\\.openclaw\\workspace-legend",
   "\\\\wsl.localhost\\Ubuntu\\home\\natza\\.openclaw\\workspace-kairo",
   "\\\\wsl.localhost\\Ubuntu\\home\\natza\\.openclaw\\workspace-veris",
+  // Hermes agent — main .env (Olympus, Persephone, and other Hermes-based agents)
+  "\\\\wsl.localhost\\Ubuntu\\home\\natza\\.hermes\\.env",
 ];
 
 // ---------------------------------------------------------------------------

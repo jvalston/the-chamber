@@ -7,10 +7,20 @@ type GwStatus = {
   tiers: Record<string, { model: string; timeout: number }[]>;
 };
 
+type OllamaModel = {
+  name: string;
+  sizeGb: number;
+  params: string;
+  family: string;
+  active: boolean;
+};
+
 export default function CloudGate() {
   const [status, setStatus]   = useState<GwStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState<string | null>(null);
+  const [models, setModels]   = useState<OllamaModel[]>([]);
+  const [totalGb, setTotalGb] = useState(0);
 
   const fetchStatus = useCallback(async () => {
     try {
@@ -23,11 +33,22 @@ export default function CloudGate() {
     }
   }, []);
 
+  const fetchModels = useCallback(async () => {
+    try {
+      const r = await fetch("/api/models", { cache: "no-store" });
+      const d = await r.json();
+      setModels(d.models ?? []);
+      setTotalGb(d.totalGb ?? 0);
+    } catch { /* keep last */ }
+  }, []);
+
   useEffect(() => {
     fetchStatus();
-    const t = setInterval(fetchStatus, 8000);
-    return () => clearInterval(t);
-  }, [fetchStatus]);
+    fetchModels();
+    const t1 = setInterval(fetchStatus, 8_000);
+    const t2 = setInterval(fetchModels, 30_000);
+    return () => { clearInterval(t1); clearInterval(t2); };
+  }, [fetchStatus, fetchModels]);
 
   async function toggle() {
     if (!status || loading) return;
@@ -124,6 +145,68 @@ export default function CloudGate() {
             {error}
           </div>
         )}
+
+        {/* Ollama model inventory */}
+        <div style={{ marginTop: "12px", borderTop: "1px solid var(--border)", paddingTop: "10px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+            <span style={{ fontSize: "9px", color: "var(--text-muted)", letterSpacing: "0.1em" }}>
+              OLLAMA MODELS
+            </span>
+            <span style={{ fontSize: "9px", color: "var(--text-muted)" }}>
+              {totalGb} GB total
+            </span>
+          </div>
+
+          {models.length === 0 ? (
+            <div style={{ fontSize: "9px", color: "var(--text-muted)" }}>
+              {error ? "ollama unreachable" : "no models installed"}
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {models.map((m) => (
+                <div key={m.name} style={{
+                  display:       "flex",
+                  alignItems:    "center",
+                  gap:           "6px",
+                  padding:       "4px 6px",
+                  borderRadius:  "2px",
+                  background:    m.active ? "rgba(0,212,255,0.04)" : "rgba(255,255,255,0.02)",
+                  border:        `1px solid ${m.active ? "rgba(0,212,255,0.15)" : "rgba(255,255,255,0.05)"}`,
+                }}>
+                  <span style={{
+                    width:           "5px", height: "5px",
+                    borderRadius:    "50%",
+                    background:      m.active ? "var(--accent)" : "var(--border)",
+                    flexShrink:      0,
+                  }} />
+                  <span style={{
+                    flex:       1,
+                    fontSize:   "9px",
+                    color:      m.active ? "var(--text-primary)" : "var(--text-muted)",
+                    overflow:   "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}>
+                    {m.name.replace(/:latest$/, "")}
+                  </span>
+                  <span style={{ fontSize: "9px", color: "var(--text-muted)", flexShrink: 0 }}>
+                    {m.sizeGb}G
+                  </span>
+                  {!m.active && (
+                    <span style={{
+                      fontSize:      "8px",
+                      color:         "var(--yellow)",
+                      letterSpacing: "0.06em",
+                      flexShrink:    0,
+                    }}>
+                      unused
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

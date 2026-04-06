@@ -9,6 +9,7 @@ const ROSTER: Record<string, { node: "lucy" | "phoenix"; gwId: string }> = {
   elior:              { node: "lucy",    gwId: "elior"    },
   aurelion:           { node: "lucy",    gwId: "aurelion" },
   atlas:              { node: "lucy",    gwId: "atlas"    },
+  hermes:             { node: "lucy",    gwId: "hermes"   },
   seraphim:           { node: "phoenix", gwId: "main"     },
   "sentinel-phoenix": { node: "phoenix", gwId: "sentinel" },
   aurora:             { node: "phoenix", gwId: "aurora"   },
@@ -16,12 +17,14 @@ const ROSTER: Record<string, { node: "lucy" | "phoenix"; gwId: string }> = {
   legend:             { node: "phoenix", gwId: "legend"   },
   kairo:              { node: "phoenix", gwId: "kairo"    },
   veris:              { node: "phoenix", gwId: "veris"    },
+  persephone:         { node: "phoenix", gwId: "persephone" },
+  olympus:            { node: "phoenix", gwId: "olympus"  },
 };
 
 const PHOENIX_OPENCLAW_BIN = process.env.PHOENIX_OPENCLAW_BIN ?? "/usr/bin/openclaw";
-const LUCY_SSH_HOST    = process.env.LUCY_SSH_HOST ?? "127.0.0.1";
-const LUCY_SSH_USER    = process.env.LUCY_SSH_USER ?? "user";
-const LUCY_OPENCLAW    = "/usr/bin/openclaw";
+const LUCY_SSH_HOST    = process.env.LUCY_SSH_HOST ?? "100.119.215.107";
+const LUCY_SSH_USER    = process.env.LUCY_SSH_USER ?? "nana";
+const LUCY_OPENCLAW    = process.env.LUCY_OC_BIN ?? "/home/nana/.npm-global/bin/openclaw";
 const LOG_PATH         = join(process.cwd(), "data", "comms-log.json");
 
 interface BroadcastMessage {

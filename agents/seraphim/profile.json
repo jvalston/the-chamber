@@ -9,7 +9,7 @@
   "transport": ["local", "Discord"],
   "memoryNamespace": "seraphim",
   "modelPrimary": "openrouter/auto",
-  "modelFallback": ["groq/llama-3.3-70b-versatile"],
+  "modelFallback": ["ollama/qwen2.5:7b-instruct"],
   "tools": ["task-dispatch", "agent-control", "memory-read"],
   "meta": {
     "created": "2026-03-16",

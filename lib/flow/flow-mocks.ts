@@ -11,7 +11,7 @@ export const MOCK_FLOW_EVENTS: FlowEvent[] = [
     agent:     "System",
     type:      "input",
     status:    "complete",
-    title:     "Mission Control started",
+    title:     "The Chamber started",
     detail:    "All panels initialised",
     source:    "host",
     target:    "Phoenix",
@@ -102,7 +102,7 @@ export const MOCK_FLOW_EVENTS: FlowEvent[] = [
     title:     "File write completed",
     detail:    "lib/flow/flow-types.ts",
     source:    "Lucy",
-    target:    "mission-control",
+    target:    "the-chamber",
   },
   {
     id:        "evt-010",

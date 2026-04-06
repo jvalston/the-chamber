@@ -38,7 +38,7 @@ const STATUS_DOT: Record<string, string> = {
 const PRINCIPALS: Principal[] = [
   {
     id:          "p1",
-    name:        "Nana",
+    name:        "Origin",
     role:        "Primary Principal",
     type:        "human",
     status:      "active",
@@ -50,13 +50,13 @@ const PRINCIPALS: Principal[] = [
   {
     id:          "p2",
     name:        "OpenClaw Gateway",
-    role:        "Model Router · :18790",
+    role:        "Model Router",
     type:        "system",
     status:      "active",
     accessLevel: "full",
     memoryAccess: ["LCM"],
     lastSeen:    "now",
-    note:        "Routes all agent model calls. OpenRouter / Groq / Ollama chains.",
+    note:        "Routes all agent model calls. OpenRouter / Ollama chains.",
   },
   {
     id:          "p3",

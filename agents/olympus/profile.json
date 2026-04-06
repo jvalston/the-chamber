@@ -1,0 +1,28 @@
+{
+  "name": "Olympus",
+  "id": "olympus",
+  "role": "AI Signals and News Intelligence Star",
+  "host": "Phoenix",
+  "description": "Monitors trusted AI news sources and delivers concise, high-signal updates for Origin with traceable source context.",
+  "autonomyProfile": {
+    "template": "hermes-style-controlled",
+    "mode": "controlled_intake",
+    "cadence": {
+      "type": "scheduled",
+      "intervalMinutes": 45,
+      "maxSignalsPerCycle": 3
+    },
+    "gating": {
+      "rule": "two_of_three",
+      "conditions": ["relevance", "impact", "recurrence"]
+    },
+    "routing": {
+      "primaryHandoff": "hermes",
+      "onError": "sentinel",
+      "onNoSignal": "silent"
+    },
+    "runtime": {
+      "cronJobName": "Olympus controlled intake cycle"
+    }
+  }
+}

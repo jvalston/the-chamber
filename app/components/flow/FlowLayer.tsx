@@ -13,19 +13,153 @@
 
 import { useEffect, useRef, useState } from "react";
 import { flowStore } from "../../../lib/flow/flow-store";
-import { MOCK_FLOW_EVENTS } from "../../../lib/flow/flow-mocks";
 import { FlowEvent } from "../../../lib/flow/flow-types";
 import FlowEventCard from "./FlowEventCard";
+
+interface LiveFlowStatus {
+  runId?: string;
+  stage?: string;
+  state?: string;
+  message?: string;
+  source?: string;
+  archive?: string;
+  updatedAt?: string;
+  elapsedSec?: number;
+  status?: string;
+}
+
+function titleCaseAgent(raw: string): string {
+  const cleaned = raw.replace(/[^a-z0-9-]/gi, "").trim();
+  if (!cleaned) return "Lumen";
+  return cleaned
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function stageToEvent(s: LiveFlowStatus): FlowEvent {
+  const stage = (s.stage ?? s.status ?? "idle").toLowerCase();
+  const state = (s.state ?? "idle").toLowerCase();
+  const ts = new Date().toLocaleTimeString("en-US", { hour12: false });
+  const message = s.message ?? "";
+
+  const meta = {
+    id: `flow-${s.runId ?? "idle"}-${stage}-${state}-${Date.now()}`,
+    timestamp: ts,
+    detail: message || "Flow update",
+    source: "The Chamber",
+    target: s.source ?? "Constellation",
+  } as const;
+
+  if (stage === "preflight") {
+    return { ...meta, agent: "Sentinel", type: "task", status: "active", title: "Preflight health checks" };
+  }
+  if (stage === "intake") {
+    return { ...meta, agent: "Origin", type: "input", status: "active", title: "Dataset intake started" };
+  }
+  if (stage === "routing") {
+    return { ...meta, agent: "Hermes", type: "routing", status: "active", title: "Routing Phoenix -> Lucy" };
+  }
+  if (stage === "execution") {
+    return { ...meta, agent: "Diamond", type: "repo", status: "active", title: "Execution and transform running" };
+  }
+  if (stage === "archive") {
+    return { ...meta, agent: "Elior", type: "memory", status: "active", title: "Archiving transformed output" };
+  }
+  if (stage === "star-loop") {
+    const waiting = message.match(/waiting on ([a-z0-9-]+)/i);
+    if (waiting) {
+      const agent = titleCaseAgent(waiting[1]);
+      return {
+        ...meta,
+        agent,
+        type: "task",
+        status: "waiting",
+        title: `${agent} handoff pending`,
+      };
+    }
+
+    const completed = message.match(/completed ([a-z0-9-]+)/i);
+    if (completed) {
+      const agent = titleCaseAgent(completed[1]);
+      return {
+        ...meta,
+        agent,
+        type: "task",
+        status: "complete",
+        title: `${agent} handoff confirmed`,
+      };
+    }
+
+    const warning = message.match(/warning on ([a-z0-9-]+)/i);
+    if (warning) {
+      const agent = titleCaseAgent(warning[1]);
+      return {
+        ...meta,
+        agent,
+        type: "warning",
+        status: "waiting",
+        title: `${agent} handoff warning`,
+      };
+    }
+
+    return { ...meta, agent: "Lumen", type: "task", status: "active", title: "Star handoff confirmations" };
+  }
+  if (stage === "postflight") {
+    return { ...meta, agent: "Seraphim", type: "task", status: "waiting", title: "Governance postflight checks" };
+  }
+  if (state === "failed" || stage === "failed") {
+    return { ...meta, agent: "System", type: "error", status: "failed", title: "Star verification failed", target: s.archive ?? "Archive" };
+  }
+  if (stage === "complete" || state === "completed") {
+    return { ...meta, agent: "System", type: "output", status: "complete", title: "Star verification completed", target: s.archive ?? "Archive" };
+  }
+
+  return { ...meta, agent: "System", type: "task", status: "queued", title: "Verification idle" };
+}
 
 export default function FlowLayer() {
   const [events, setEvents]       = useState<FlowEvent[]>([]);
   const [autoFollow, setAutoFollow] = useState(true);
+  const [live, setLive]           = useState<LiveFlowStatus>({ status: "idle" });
   const stripRef                  = useRef<HTMLDivElement>(null);
+  const lastSigRef                = useRef<string>("");
 
-  // Seed mock data on mount; subscribe to future events
+  // Subscribe to flow store updates
   useEffect(() => {
-    flowStore.seed(MOCK_FLOW_EVENTS);
     return flowStore.subscribe(setEvents);
+  }, []);
+
+  // Poll live flow status and append stage-change events
+  useEffect(() => {
+    let mounted = true;
+
+    async function poll() {
+      try {
+        const r = await fetch("/api/flow-status", { cache: "no-store" });
+        const status = (await r.json()) as LiveFlowStatus;
+        if (!mounted) return;
+
+        setLive(status);
+        const stage = (status.stage ?? status.status ?? "idle").toLowerCase();
+        const progress = stage === "star-loop" ? (status.message ?? "") : "";
+        const sig = `${status.runId ?? "none"}:${stage}:${status.state ?? "idle"}:${progress}`;
+        if (sig !== lastSigRef.current) {
+          lastSigRef.current = sig;
+          flowStore.addEvent(stageToEvent(status));
+        }
+      } catch {
+        // no-op; keep last known status
+      }
+    }
+
+    poll();
+    const id = setInterval(poll, 2000);
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
   }, []);
 
   // Auto-scroll to newest (rightmost) event
@@ -71,6 +205,15 @@ export default function FlowLayer() {
             fontSize:   "10px",
           }}>
             {events.length} events
+          </span>
+          <span style={{
+            color: "var(--accent-dim)",
+            fontWeight: 500,
+            fontSize: "10px",
+            marginLeft: "8px",
+            letterSpacing: "0.04em",
+          }}>
+            {`${(live.stage ?? live.status ?? "idle").toUpperCase()} · ${live.elapsedSec ?? 0}s`}
           </span>
         </div>
 

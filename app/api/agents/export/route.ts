@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
   const bundle = {
     version:       "1",
     exportedAt:    new Date().toISOString(),
-    exportedFrom:  "mission-control",
+    exportedFrom:  "the-chamber",
     agent,
     persona,
     profile,

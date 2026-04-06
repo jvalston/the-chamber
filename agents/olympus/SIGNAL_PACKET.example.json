@@ -1,0 +1,18 @@
+{
+  "origin": "olympus",
+  "timestamp": "<iso>",
+  "run_id": "<id>",
+  "source": "youtube | x | reddit | rss",
+  "topic": "<short_label>",
+  "category": "ai | security | tools | systems",
+  "gate_pass": {
+    "relevance": true,
+    "impact": true,
+    "recurrence": false
+  },
+  "summary": "<2-3 sentence clean summary>",
+  "links": [
+    "<url1>",
+    "<url2>"
+  ]
+}

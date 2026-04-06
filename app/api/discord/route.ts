@@ -36,6 +36,9 @@ export async function GET() {
     { name: "Aurelion", token: process.env.DISCORD_TOKEN_AURELION,  channelId: process.env.AURELION_DISCORD_ROOM  },
     { name: "Veris",    token: process.env.DISCORD_TOKEN_VERIS,     channelId: process.env.VERIS_DISCORD_ROOM     },
     { name: "Kairo",    token: process.env.DISCORD_TOKEN_KAIRO,     channelId: process.env.KAIRO_DISCORD_ROOM     },
+    { name: "Hermes",     token: process.env.DISCORD_TOKEN_HERMES,     channelId: process.env.HERMES_DISCORD_ROOM                                                        },
+    { name: "Olympus",   token: process.env.DISCORD_TOKEN_OLYMPUS,   channelId: process.env.OLYMPUS_DISCORD_ROOM                                                       },
+    { name: "Persephone",token: process.env.DISCORD_TOKEN_PERSEPHONE,channelId: process.env.PERSEPHONE_DISCORD_ROOM ?? process.env.PERSEPHONE_DISCORD_WORKSPACE_ROOM  },
   ];
 
   const feeds: AgentFeed[] = await Promise.all(

@@ -81,7 +81,7 @@ Source of creative continuity. Queries Elior for past decisions and pattern hist
 ## Model Config
 
 **Primary:** `openrouter/auto`
-**Fallbacks:** `groq/llama-3.3-70b-versatile` · `ollama/qwen2.5-coder:3b` · `ollama/qwen2.5:7b-instruct`
+**Fallbacks:** `openrouter/openai/gpt-4o` · `ollama/qwen2.5-coder:3b` · `ollama/qwen2.5:7b-instruct`
 
 ---
 

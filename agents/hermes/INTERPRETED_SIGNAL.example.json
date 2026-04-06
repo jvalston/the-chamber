@@ -1,0 +1,18 @@
+{
+  "origin": "hermes",
+  "linked_to": "<olympus_run_id>",
+  "pattern": "emerging | isolated | recurring",
+  "system_relevance": {
+    "affects": [
+      "axiom",
+      "docker_stack",
+      "agent_execution"
+    ],
+    "priority": "low | medium | high"
+  },
+  "insight": "<1-2 sentences connecting this signal to YOUR system>",
+  "forwarded_to": [
+    "persephone",
+    "lumen"
+  ]
+}

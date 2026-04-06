@@ -15,6 +15,7 @@ export interface Service {
   name: string;
   status: ServiceStatus;
   port?: number;
+  healthKey?: string;
   host?: string;
   detail?: string;
 }
@@ -44,7 +45,7 @@ export const HOST_MACHINES: HostMachine[] = [
   {
     id:     "lucy",
     name:   "Lucy",
-    role:   "Secondary AI Host — Diamond · Elior",
+    role:   "Memory & Ops Node — Diamond · Elior · Sentinel",
     ip:     "<REDACTED_PRIVATE_IP>",
     os:     "Linux",
     status: "online",
@@ -56,6 +57,13 @@ export const HOST_MACHINES: HostMachine[] = [
     os:     "TBD",
     status: "offline",
   },
+  {
+    id:     "mac-mini",
+    name:   "Mac Mini",
+    role:   "Docker Memory Host — shared services for all systems",
+    os:     "macOS",
+    status: "offline",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -64,11 +72,12 @@ export const HOST_MACHINES: HostMachine[] = [
 
 export const CORE_SERVICES: Service[] = [
   { name: "LiveKit",       status: "online", port: 7880   },
-  { name: "LiveKit Agent", status: "offline"               },
+  { name: "LiveKit Agent", status: "online", detail: "Docker service active" },
   { name: "Legend UI",     status: "online", port: 8787   },
   { name: "Provider GW",   status: "online", port: 4000   },
-  { name: "Speak Service", status: "online", port: 8500   },
-  { name: "OpenClaw",      status: "online", port: 18789, host: "WSL2" },
+  { name: "Speak Service", status: "online", port: 8004   },
+  { name: "OpenClaw (Phoenix)", status: "online", port: 18789, healthKey: "openclaw_phoenix", host: "Phoenix" },
+  { name: "OpenClaw (Lucy)",    status: "online", port: 18789, healthKey: "openclaw_lucy",    host: "Lucy"    },
 ];
 
 export const AI_SERVICES: Service[] = [
@@ -84,6 +93,7 @@ export const SUPPORT_SERVICES: Service[] = [
   { name: "Music Steward",        status: "online",  port: 8002  },
   { name: "Vera AI (Proxy)",      status: "online",  port: 11450 },
   { name: "Ollama",               status: "online",  port: 11434 },
+  { name: "Hermes (Phoenix)",     status: "online",  healthKey: "hermes_phoenix", host: "Phoenix" },
+  { name: "Hermes (Lucy)",        status: "online",  healthKey: "hermes_lucy",    host: "Lucy"    },
   { name: "Kokoro TTS",           status: "offline", port: 8880  },
-  { name: "OpenClaw (Windows — dissolved)", status: "offline", port: 18790 },
 ];

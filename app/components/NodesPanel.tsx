@@ -1,9 +1,34 @@
 "use client";
 
-import { HOST_MACHINES } from "../../data/system";
+import { useEffect, useState } from "react";
+import { HOST_MACHINES, HostMachine } from "../../data/system";
 import NodeCard from "./NodeCard";
 
 export default function NodesPanel() {
+  const [liveStatus, setLiveStatus] = useState<Record<string, HostMachine["status"]>>({});
+
+  useEffect(() => {
+    async function poll() {
+      try {
+        const r = await fetch("/api/nodes", { cache: "no-store" });
+        if (!r.ok) return;
+        const d = await r.json();
+        const map: Record<string, HostMachine["status"]> = {};
+        for (const node of d.nodes) {
+          map[node.id] = node.status as HostMachine["status"];
+        }
+        setLiveStatus(map);
+      } catch { /* keep last */ }
+    }
+    poll();
+    const id = setInterval(poll, 20_000);
+    return () => clearInterval(id);
+  }, []);
+
+  const nodes = HOST_MACHINES.map((n) =>
+    liveStatus[n.id] !== undefined ? { ...n, status: liveStatus[n.id] } : n
+  );
+
   return (
     <div
       style={{
@@ -27,7 +52,7 @@ export default function NodesPanel() {
           borderBottom: "1px solid var(--border)",
         }}
       >
-        NODES — {HOST_MACHINES.filter((n) => n.status === "online").length}/{HOST_MACHINES.length} ONLINE
+        NODES — {nodes.filter((n) => n.status === "online").length}/{nodes.length} ONLINE
       </div>
 
       <div
@@ -37,7 +62,7 @@ export default function NodesPanel() {
           gap:           "8px",
         }}
       >
-        {HOST_MACHINES.map((node) => (
+        {nodes.map((node) => (
           <NodeCard key={node.id} node={node} />
         ))}
       </div>

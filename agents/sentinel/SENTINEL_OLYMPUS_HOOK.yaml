@@ -1,0 +1,45 @@
+sentinel:
+  watch:
+    - agent: olympus
+      events:
+        - cycle_start
+        - cycle_complete
+        - cycle_error
+        - no_output
+
+    - agent: hermes
+      events:
+        - processing_complete
+        - escalation_triggered
+
+  checks:
+    olympus:
+      require_output: true
+      timeout_seconds: 120
+
+    hermes:
+      require_processing: true
+      timeout_seconds: 90
+
+  failure_conditions:
+    - type: "no_signal_generated"
+      action: "flag_warning"
+
+    - type: "olympus_error"
+      action: "report_origin"
+
+    - type: "hermes_not_triggered"
+      action: "report_origin"
+
+  reporting:
+    format: "sentinel_report"
+    forward_to:
+      - origin
+      - seraphim
+
+  recovery:
+    on_soft_fail:
+      retry_once: true
+
+    on_hard_fail:
+      halt_chain: true

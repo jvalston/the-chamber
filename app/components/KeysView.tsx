@@ -274,6 +274,108 @@ const EMPTY_FORM: Omit<KeyEntry, "id" | "createdAt" | "rotatedAt" | "status"> = 
   targetVariable: "",
 };
 
+const KEY_TEMPLATE_OPTIONS = [
+  { value: "discord-token",  label: "Discord Token" },
+  { value: "discord-room",   label: "Discord Personal Room" },
+  { value: "discord-workspace", label: "Discord Workspace Room" },
+  { value: "discord-commons",label: "Discord Commons Room" },
+  { value: "discord-orientation", label: "Discord Orientation Room" },
+  { value: "telegram-token", label: "Telegram Token" },
+  { value: "custom",         label: "Custom (manual)" },
+] as const;
+
+const AGENT_OPTIONS = [
+  "Legend", "Seraphim", "Diamond", "Lumen", "Elior", "Sentinel",
+  "Atlas", "Aurora", "Aurelion", "Veris", "Kairo", "Hermes", "Persephone", "Olympus",
+] as const;
+
+// Agents whose keys live in ~/.hermes/.env (Hermes-framework-based)
+const HERMES_BASED_AGENTS = new Set(["Olympus", "Persephone", "Hermes", "Lumen"]);
+
+const TARGET_FILE_OPTIONS = [
+  { label: "Hermes (.env)",          value: "/home/natza/.hermes/.env" },
+  { label: "The Chamber (.env.local)", value: "C:\\Users\\natza\\Desktop\\the-chamber\\.env.local" },
+  { label: "OpenClaw workspace",     value: "\\\\wsl.localhost\\Ubuntu\\home\\natza\\.openclaw\\workspace\\.env" },
+] as const;
+
+function varSafe(name: string) {
+  return name.trim().toUpperCase().replace(/[^A-Z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+}
+
+function applyTemplateToForm(
+  base: Omit<KeyEntry, "id" | "createdAt" | "rotatedAt" | "status">,
+  template: string,
+  agent: string
+) {
+  const id = varSafe(agent);
+  const targetFile = base.targetFile ||
+    (HERMES_BASED_AGENTS.has(agent)
+      ? "/home/natza/.hermes/.env"
+      : "C:\\Users\\natza\\Desktop\\mission-control\\.env.local");
+
+  if (template === "discord-token") {
+    return {
+      ...base,
+      name:           `DISCORD_TOKEN_${id}`,
+      provider:       "Discord",
+      belongsTo:      agent,
+      targetVariable: `DISCORD_TOKEN_${id}`,
+      targetFile,
+    };
+  }
+  if (template === "discord-room") {
+    return {
+      ...base,
+      name:           `${id}_DISCORD_ROOM`,
+      provider:       "Discord",
+      belongsTo:      agent,
+      targetVariable: `${id}_DISCORD_ROOM`,
+      targetFile,
+    };
+  }
+  if (template === "discord-commons") {
+    return {
+      ...base,
+      name:           "COMMONS_DISCORD_ROOM",
+      provider:       "Discord",
+      belongsTo:      "Commons",
+      targetVariable: "COMMONS_DISCORD_ROOM",
+      targetFile,
+    };
+  }
+  if (template === "discord-workspace") {
+    return {
+      ...base,
+      name:           `${id}_DISCORD_WORKSPACE_ROOM`,
+      provider:       "Discord",
+      belongsTo:      agent,
+      targetVariable: `${id}_DISCORD_WORKSPACE_ROOM`,
+      targetFile,
+    };
+  }
+  if (template === "discord-orientation") {
+    return {
+      ...base,
+      name:           "ORIENTATION_DISCORD_ROOM",
+      provider:       "Discord",
+      belongsTo:      "Orientation",
+      targetVariable: "ORIENTATION_DISCORD_ROOM",
+      targetFile,
+    };
+  }
+  if (template === "telegram-token") {
+    return {
+      ...base,
+      name:           `TELEGRAM_TOKEN_${id}`,
+      provider:       "Telegram",
+      belongsTo:      agent,
+      targetVariable: `TELEGRAM_TOKEN_${id}`,
+      targetFile,
+    };
+  }
+  return base;
+}
+
 // ---------------------------------------------------------------------------
 // Key Form Modal
 // ---------------------------------------------------------------------------
@@ -289,6 +391,8 @@ function KeyFormModal({
   const [form,    setForm]    = useState({ ...EMPTY_FORM, ...initial });
   const [saving,  setSaving]  = useState(false);
   const [error,   setError]   = useState<string | null>(null);
+  const [template, setTemplate] = useState<(typeof KEY_TEMPLATE_OPTIONS)[number]["value"]>("discord-token");
+  const [agentName, setAgentName] = useState("Hermes");
   const nameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { nameRef.current?.focus(); }, []);
@@ -383,6 +487,45 @@ function KeyFormModal({
 
         {/* Form */}
         <form onSubmit={submit} style={{ padding: "18px", display: "flex", flexDirection: "column", gap: "14px" }}>
+          {!initial?.id && (
+            <div style={{ border: "1px solid var(--border)", borderRadius: "4px", padding: "10px", background: "rgba(0,0,0,0.2)" }}>
+              <div style={{ fontSize: "10px", letterSpacing: "0.1em", color: "var(--accent)", marginBottom: "8px" }}>
+                QUICK PRESET
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: "8px" }}>
+                <select
+                  value={template}
+                  onChange={(e) => setTemplate(e.target.value as (typeof KEY_TEMPLATE_OPTIONS)[number]["value"])}
+                  style={inputStyle}
+                >
+                  {KEY_TEMPLATE_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+                <div>
+                  <input
+                    list="agent-name-options"
+                    value={agentName}
+                    onChange={(e) => setAgentName(e.target.value)}
+                    placeholder="Star name (e.g. Olympus)"
+                    style={inputStyle}
+                  />
+                  <datalist id="agent-name-options">
+                    {AGENT_OPTIONS.map((a) => <option key={a} value={a} />)}
+                  </datalist>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => applyTemplateToForm(f, template, agentName))}
+                  style={{ background: "rgba(0,212,255,0.12)", border: "1px solid rgba(0,212,255,0.3)", color: "var(--accent)", borderRadius: "3px", padding: "8px 10px", fontSize: "11px", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.06em" }}
+                >
+                  APPLY
+                </button>
+              </div>
+              <div style={{ fontSize: "10px", color: "var(--text-muted)", marginTop: "8px" }}>
+                Discord uses two keys by design: token and room. Use the preset to fill both quickly.
+              </div>
+            </div>
+          )}
+
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
             <div>
               <label style={labelStyle}>KEY NAME *</label>
@@ -396,7 +539,7 @@ function KeyFormModal({
 
           <div>
             <label style={labelStyle}>BELONGS TO (agent or app)</label>
-            <input {...field("belongsTo")} placeholder="Legend, Mission Control, OpenClaw…" style={inputStyle} />
+            <input {...field("belongsTo")} placeholder="Legend, The Chamber, OpenClaw…" style={inputStyle} />
           </div>
 
           <div>
@@ -418,9 +561,15 @@ function KeyFormModal({
                 <label style={labelStyle}>TARGET FILE</label>
                 <input
                   {...field("targetFile")}
-                  placeholder="C:\\path\\to\\.env.local or /home/user/..."
+                  list="target-file-options"
+                  placeholder="C:\..\.env.local or /home/natza/..."
                   style={{ ...inputStyle, fontSize: "11px" }}
                 />
+                <datalist id="target-file-options">
+                  {TARGET_FILE_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value} label={o.label} />
+                  ))}
+                </datalist>
               </div>
               <div>
                 <label style={labelStyle}>VARIABLE NAME</label>
@@ -721,19 +870,43 @@ export default function KeysView() {
   useEffect(() => { load(); }, [load]);
 
   async function saveKey(data: Partial<KeyEntry>) {
+    let savedEntry: KeyEntry | null = null;
+
     if (editTarget) {
-      await fetch(`/api/keys/${editTarget.id}`, {
+      const res = await fetch(`/api/keys/${editTarget.id}`, {
         method:  "PUT",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify(data),
       });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({})) as { error?: string };
+        throw new Error(d.error ?? "Failed to update key");
+      }
+      savedEntry = await res.json() as KeyEntry;
     } else {
-      await fetch("/api/keys", {
+      const res = await fetch("/api/keys", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify(data),
       });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({})) as { error?: string };
+        throw new Error(d.error ?? "Failed to create key");
+      }
+      savedEntry = await res.json() as KeyEntry;
     }
+
+    // Auto-sync vault entries into target env file so new keys become active immediately.
+    if (savedEntry?.id && savedEntry.targetFile?.trim() && savedEntry.targetVariable?.trim()) {
+      const writeRes = await fetch(`/api/keys/${savedEntry.id}/write`, { method: "POST" });
+      if (!writeRes.ok) {
+        const d = await writeRes.json().catch(() => ({})) as { error?: string };
+        const msg = d.error ?? "Write to target env file failed";
+        // Keep the key saved in vault, but surface that runtime sync failed.
+        throw new Error(`Saved in Key Keeper, but could not write to target file: ${msg}`);
+      }
+    }
+
     await load();
   }
 

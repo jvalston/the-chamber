@@ -45,7 +45,7 @@ const MOCK_BUILDS: Build[] = [
     agent:    "Diamond",
     host:     "Lucy",
     started:  "today 10:00",
-    detail:   "Awaiting Nana approval before proceeding",
+    detail:   "Awaiting Origin approval before proceeding",
     progress: 0,
   },
   {

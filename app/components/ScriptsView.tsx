@@ -2,6 +2,15 @@
 import { useCallback, useEffect, useState } from "react";
 import type { ScriptEntry } from "../api/scripts/route";
 
+const FLOW_SCRIPT_FILE = "mc-constellation-flow-loop.sh";
+
+interface FlowStatus {
+  runId?: string;
+  stage?: string;
+  state?: string;
+  message?: string;
+}
+
 export default function ScriptsView() {
   const [scripts,  setScripts]  = useState<ScriptEntry[]>([]);
   const [selected, setSelected] = useState<ScriptEntry | null>(null);
@@ -9,6 +18,7 @@ export default function ScriptsView() {
   const [output,   setOutput]   = useState<string | null>(null);
   const [ok,       setOk]       = useState<boolean | null>(null);
   const [loading,  setLoading]  = useState(true);
+  const [flowStatus, setFlowStatus] = useState<FlowStatus | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -25,11 +35,56 @@ export default function ScriptsView() {
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    if (!running || selected?.file !== FLOW_SCRIPT_FILE) return;
+
+    let mounted = true;
+    let lastSig = "";
+
+    async function poll() {
+      try {
+        const r = await fetch("/api/flow-status", { cache: "no-store" });
+        if (!r.ok) return;
+        const status = await r.json() as FlowStatus;
+        if (!mounted) return;
+
+        setFlowStatus(status);
+
+        const stage = status.stage ?? "idle";
+        const state = status.state ?? "idle";
+        const msg = status.message ?? "";
+        const sig = `${status.runId ?? "none"}:${stage}:${state}:${msg}`;
+        if (sig === lastSig) return;
+        lastSig = sig;
+
+        const stamp = new Date().toLocaleTimeString("en-US", { hour12: false });
+        const line = `[${stamp}] ${stage} · ${state}${msg ? ` · ${msg}` : ""}`;
+        setOutput((prev) => (prev ? `${prev}\n${line}` : line));
+      } catch {
+        // keep last known status
+      }
+    }
+
+    poll();
+    const id = setInterval(poll, 2500);
+
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
+  }, [running, selected?.file]);
+
   async function run() {
     if (!selected || running) return;
     setRunning(true);
     setOutput(null);
     setOk(null);
+    setFlowStatus(null);
+
+    if (selected.file === FLOW_SCRIPT_FILE) {
+      const stamp = new Date().toLocaleTimeString("en-US", { hour12: false });
+      setOutput(`[${stamp}] starting ${selected.file}...`);
+    }
 
     try {
       const r = await fetch("/api/scripts/run", {
@@ -199,11 +254,17 @@ export default function ScriptsView() {
               </div>
 
               <div style={{ flex: 1, overflowY: "auto", padding: "14px 16px" }}>
-                {running ? (
-                  <div style={{ color: "var(--text-muted)", fontSize: "13px" }}>
-                    <span style={{ color: "var(--accent)" }}>▶</span> Running {selected.file}…
-                  </div>
-                ) : output ? (
+                {output ? (
+                  <div>
+                    {running && (
+                      <div style={{ color: "var(--text-muted)", fontSize: "12px", marginBottom: "8px" }}>
+                        <span style={{ color: "var(--accent)" }}>▶</span> Running {selected.file}…
+                        {selected.file === FLOW_SCRIPT_FILE && flowStatus?.message ? (
+                          <span style={{ marginLeft: "8px" }}>Latest: {flowStatus.message}</span>
+                        ) : null}
+                      </div>
+                    )}
+
                   <pre style={{
                     margin:     0,
                     fontSize:   "12px",
@@ -215,6 +276,11 @@ export default function ScriptsView() {
                   }}>
                     {output}
                   </pre>
+                  </div>
+                ) : running ? (
+                  <div style={{ color: "var(--text-muted)", fontSize: "13px" }}>
+                    <span style={{ color: "var(--accent)" }}>▶</span> Running {selected.file}…
+                  </div>
                 ) : (
                   <div style={{ color: "var(--text-muted)", fontSize: "13px", opacity: 0.5 }}>
                     Press RUN to execute this script. Output will appear here.

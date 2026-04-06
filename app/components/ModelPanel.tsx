@@ -25,11 +25,9 @@ const PROVIDER_GROUPS: SystemGroup[] = [
     entries: [
       { lane: "PRIMARY",  model: "qwen2.5:7b-instruct",    provider: "Ollama",     tag: "local" },
       { lane: "CODER",    model: "qwen2.5-coder:7b",        provider: "Ollama",     tag: "local" },
-      { lane: "CLOUD-1",  model: "llama-3.3-70b-versatile", provider: "Groq",       tag: "fast"  },
-      { lane: "CLOUD-2",  model: "llama3.3-70b",            provider: "Cerebras",   tag: "free", note: "key pending" },
-      { lane: "CLOUD-3",  model: "Llama-3.3-70B",           provider: "SambaNova",  tag: "free", note: "key pending" },
-      { lane: "CLOUD-4",  model: "gemini-1.5-flash",        provider: "Gemini",     tag: "free", note: "key pending" },
-      { lane: "CLOUD-5",  model: "auto",                    provider: "OpenRouter", tag: "cloud" },
+      { lane: "CLOUD-1",  model: "auto",                    provider: "OpenRouter", tag: "cloud" },
+      { lane: "CLOUD-2",  model: "gpt-4o-mini",             provider: "OpenRouter", tag: "cloud" },
+      { lane: "CLOUD-3",  model: "gemini-1.5-flash",        provider: "Gemini",     tag: "free", note: "key pending" },
     ],
   },
   {
@@ -38,7 +36,6 @@ const PROVIDER_GROUPS: SystemGroup[] = [
     sublabel: "OpenClaw 18789 · Tier 1 exclusive",
     entries: [
       { lane: "SHARED",   model: "gateway/general",         provider: "Gateway",    tag: "local" },
-      { lane: "SHARED",   model: "llama-3.3-70b",           provider: "Groq",       tag: "fast"  },
       { lane: "SHARED",   model: "auto",                    provider: "OpenRouter", tag: "cloud" },
       { lane: "TIER 1",   model: "gpt-4o",                  provider: "OpenRouter", tag: "tier1" },
       { lane: "TIER 1",   model: "gpt-4.5-preview",         provider: "OpenRouter", tag: "tier1" },

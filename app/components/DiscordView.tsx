@@ -18,17 +18,20 @@ interface AgentFeed {
 }
 
 const AGENT_COLOR: Record<string, string> = {
-  Legend:   "#00d4ff",
-  Seraphim: "#a855f7",
-  Diamond:  "#00ff9d",
-  Lumen:    "#818cf8",
-  Elior:    "#ffd700",
-  Sentinel: "#ff6b6b",
-  Atlas:    "#f97316",
-  Aurora:   "#ec4899",
-  Aurelion: "#facc15",
-  Veris:    "#4ade80",
-  Kairo:    "#38bdf8",
+  Legend:     "#00d4ff",
+  Seraphim:   "#a855f7",
+  Diamond:    "#00ff9d",
+  Lumen:      "#818cf8",
+  Elior:      "#ffd700",
+  Sentinel:   "#ff6b6b",
+  Atlas:      "#f97316",
+  Aurora:     "#ec4899",
+  Aurelion:   "#facc15",
+  Veris:      "#4ade80",
+  Kairo:      "#38bdf8",
+  Hermes:     "#38bdf8",
+  Olympus:    "#fb923c",
+  Persephone: "#e879f9",
 };
 
 function tabBtn(active: boolean, color: string): React.CSSProperties {

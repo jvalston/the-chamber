@@ -29,25 +29,26 @@ interface AgentDef {
 // ---------------------------------------------------------------------------
 const AGENTS: AgentDef[] = [
   // Lucy
-  { id: "sentinel", name: "Sentinel Lucy", emoji: "🛡️", node: "lucy",    color: "#4ab0f5" },
-  { id: "diamond",  name: "Diamond",  emoji: "💎", node: "lucy",    color: "#a78bfa" },
-  { id: "elior",    name: "Elior",    emoji: "📜", node: "lucy",    color: "#34d399" },
-  { id: "aurelion", name: "Aurelion", emoji: "🌅", node: "lucy",    color: "#fbbf24" },
-  { id: "atlas",    name: "Atlas",    emoji: "🧭", node: "lucy",    color: "#60a5fa" },
+  { id: "sentinel",  name: "Sentinel Lucy", emoji: "🛡️", node: "lucy",    color: "#4ab0f5" },
+  { id: "diamond",   name: "Diamond",       emoji: "💎", node: "lucy",    color: "#a78bfa" },
+  { id: "elior",     name: "Elior",         emoji: "📜", node: "lucy",    color: "#34d399" },
+  { id: "aurelion",  name: "Aurelion",      emoji: "🌅", node: "lucy",    color: "#fbbf24" },
+  { id: "atlas",     name: "Atlas",         emoji: "🧭", node: "lucy",    color: "#60a5fa" },
   // Phoenix
   { id: "seraphim",         name: "Seraphim",         emoji: "💜", node: "phoenix", color: "#a855f7" },
   { id: "sentinel-phoenix", name: "Sentinel Phoenix", emoji: "🛡️", node: "phoenix", color: "#f97316" },
-  { id: "aurora",   name: "Aurora",   emoji: "🌌", node: "phoenix", color: "#6ee7f7" },
-  { id: "lumen",    name: "Lumen",    emoji: "🔦", node: "luc" as "lucy", color: "#fde68a" },
-  { id: "legend",   name: "Legend",   emoji: "📖", node: "phoenix", color: "#fb923c" },
-  { id: "kairo",    name: "Kairo",    emoji: "⚙️",  node: "phoenix", color: "#94a3b8" },
-  { id: "veris",    name: "Veris",    emoji: "🔍", node: "phoenix", color: "#86efac" },
+  { id: "aurora",    name: "Aurora",     emoji: "🌌", node: "phoenix", color: "#6ee7f7" },
+  { id: "lumen",     name: "Lumen",      emoji: "🔦", node: "phoenix", color: "#fde68a" },
+  { id: "legend",    name: "Legend",     emoji: "📖", node: "phoenix", color: "#fb923c" },
+  { id: "kairo",     name: "Kairo",      emoji: "⚙️",  node: "phoenix", color: "#94a3b8" },
+  { id: "veris",     name: "Veris",      emoji: "🔍", node: "phoenix", color: "#86efac" },
+  { id: "olympus",   name: "Olympus",    emoji: "🔭", node: "phoenix", color: "#fb923c" },
+  { id: "persephone",name: "Persephone", emoji: "🌸", node: "phoenix", color: "#e879f9" },
   // Axiom — not yet online
   { id: "sentinel-axiom", name: "Sentinel Axiom", emoji: "🛡️", node: "axiom", color: "#a855f7" },
 ];
 
-// Fix Lumen node
-const ROSTER = AGENTS.map((a) => a.id === "lumen" ? { ...a, node: "phoenix" as const } : a);
+const ROSTER = AGENTS;
 
 const NODE_LABEL: Record<string, string> = {
   lucy:    "LUCY",
@@ -683,9 +684,7 @@ export default function CommsView() {
                 <div style={{ fontSize: "32px", opacity: 0.4 }}>{selected.emoji}</div>
                 <div style={{ fontSize: "15px" }}>No messages with {selected.name} yet.</div>
                 <div style={{ fontSize: "13px", color: "var(--text-muted)", opacity: 0.7 }}>
-                  {selected.node === "phoenix"
-                    ? "Phoenix gateway must be reachable (set GATEWAY_PHOENIX_URL)."
-                    : "Type a message below to begin."}
+                  {"Type a message below to begin."}
                 </div>
               </div>
             ) : (

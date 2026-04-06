@@ -18,6 +18,8 @@ interface ApprovalItem {
   created:     string;
   category:    string;
   resolvedAt?: string;
+  /** Structured fields for agent-gap requests submitted by Seraphim */
+  meta?: Record<string, string>;
 }
 
 function read(): { approvals: ApprovalItem[] } {
@@ -36,7 +38,7 @@ async function notifySeraphim(item: ApprovalItem, action: ApprovalStatus) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        from:    "mission-control",
+        from:    "the-chamber",
         type:    "approval.decision",
         payload: { id: item.id, title: item.title, action, category: item.category },
       }),
@@ -52,7 +54,7 @@ async function notifyElior(item: ApprovalItem, action: ApprovalStatus) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        from:    "mission-control",
+        from:    "the-chamber",
         type:    "approval.record",
         payload: {
           event:      `approval.${action}`,
@@ -113,6 +115,7 @@ export async function POST(req: NextRequest) {
       status:      "pending",
       created:     new Date().toISOString(),
       category:    body.category ?? "General",
+      ...(body.meta ? { meta: body.meta } : {}),
     };
 
     data.approvals.unshift(item);

@@ -7,7 +7,7 @@ const VIEWS: View[] = [
   "system", "agents", "routing",
   "tasks", "projects", "calendar",
   "team", "office", "pipeline",
-  "memory", "docs", "repos", "inbox", "comms", "discord",
+  "memory", "docs", "repos", "inbox", "notes", "comms", "discord", "polls", "telegram",
   "content", "approvals", "council", "people",
   "radar", "factory", "feedback",
   "keys", "scripts", "translate",
@@ -125,7 +125,7 @@ export default function TopBar({ view, onViewChange }: Props) {
             color:         "var(--text-secondary)",
           }}
         >
-          MISSION CONTROL
+          THE CHAMBER
         </div>
       </div>
 

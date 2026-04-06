@@ -1,0 +1,12 @@
+{
+  "runId": "flow-20260403-103922",
+  "stage": "complete",
+  "state": "completed",
+  "message": "Star verification complete. Run flow-20260403-103922 at 2026-04-03T10:42:51-05:00. Readiness passed: all 6 required stars confirmed.",
+  "source": "/home/natza/.openclaw/the-chamber/test_flow",
+  "archive": "/home/natza/constellation-archives/flow-validation/flow-20260403-103922",
+  "reportPath": "/home/natza/constellation-archives/flow-validation/flow-20260403-103922/flow-report.json",
+  "startedAt": "1775230762",
+  "updatedAt": "2026-04-03T10:42:51-05:00",
+  "elapsedSec": 209
+}

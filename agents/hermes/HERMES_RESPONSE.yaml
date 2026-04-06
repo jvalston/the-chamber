@@ -1,0 +1,44 @@
+hermes:
+  mode: signal_interpreter
+
+  input:
+    expects: "signal_packet"
+    from: olympus
+
+  processing:
+    steps:
+      - identify_pattern
+      - cross_reference_internal
+      - assess_system_relevance
+      - detect_repeat_signals
+
+  pattern_detection:
+    enabled: true
+    match_types:
+      - "repeated_topic"
+      - "emerging_trend"
+      - "system_relevance"
+
+  internal_reference:
+    enabled: true
+    check_against:
+      - "current_projects"
+      - "recent_logs"
+      - "active_builds"
+
+  output:
+    format: "interpreted_signal"
+    forward_to:
+      - persephone
+      - lumen
+
+  escalation:
+    if_high_impact:
+      notify:
+        - origin
+        - sentinel
+
+  suppression:
+    ignore_if:
+      - "no_pattern"
+      - "no_internal_relevance"

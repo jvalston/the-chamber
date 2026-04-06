@@ -17,12 +17,14 @@ import ProjectsView from "./components/ProjectsView";
 import InboxView from "./components/InboxView";
 import ReposView from "./components/ReposView";
 import DocsView from "./components/DocsView";
+import NotesBridgeView from "./components/NotesBridgeView";
 import FlowLayer from "./components/flow/FlowLayer";
 import CalendarView  from "./components/CalendarView";
 import TeamView      from "./components/TeamView";
 import OfficeView    from "./components/OfficeView";
 import ContentView   from "./components/ContentView";
 import ApprovalsView from "./components/ApprovalsView";
+import StarToolsView from "./components/StarToolsView";
 import CouncilView   from "./components/CouncilView";
 import PipelineView  from "./components/PipelineView";
 import RadarView     from "./components/RadarView";
@@ -34,6 +36,9 @@ import DiscordView   from "./components/DiscordView";
 import KeysView      from "./components/KeysView";
 import ScriptsView      from "./components/ScriptsView";
 import TranslatorView   from "./components/TranslatorView";
+import TranscriptView   from "./components/TranscriptView";
+import TelegramView     from "./components/TelegramView";
+import PollsView       from "./components/PollsView";
 
 // Service data lives in /data/system.ts — edit there to add/remove services
 import {
@@ -51,7 +56,7 @@ import { View } from "./nav";
 // ---------------------------------------------------------------------------
 
 function SystemView() {
-  const [liveStatus, setLiveStatus] = useState<Record<number, Service["status"]>>({});
+  const [liveStatus, setLiveStatus] = useState<Record<string, Service["status"]>>({});
 
   useEffect(() => {
     async function poll() {
@@ -66,11 +71,12 @@ function SystemView() {
   }, []);
 
   function withLive(svcs: Service[]): Service[] {
-    return svcs.map((s) =>
-      s.port !== undefined && liveStatus[s.port] !== undefined
-        ? { ...s, status: liveStatus[s.port] }
-        : s
-    );
+    return svcs.map((s) => {
+      const key = s.healthKey ?? (s.port !== undefined ? String(s.port) : undefined);
+      return key && liveStatus[key] !== undefined
+        ? { ...s, status: liveStatus[key] }
+        : s;
+    });
   }
 
   return (
@@ -85,6 +91,18 @@ function SystemView() {
         height:        "100%",
       }}
     >
+      <div className="panel" style={{ flexShrink: 0 }}>
+        <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", background: "rgba(0,0,0,0.3)" }}>
+          <div style={{ fontSize: "12px", letterSpacing: "0.14em", color: "var(--accent)", fontWeight: 700 }}>
+            CONSTELLATION CHAMBER OF STARS
+          </div>
+          <div style={{ marginTop: "6px", fontSize: "11px", color: "var(--text-secondary)", letterSpacing: "0.04em", lineHeight: 1.5 }}>
+            Mission: Every star receives input, performs its role, and emits output into the chain.
+            No stage completes without star interaction. Origin retains full override.
+          </div>
+        </div>
+      </div>
+
       {/* Live activity strip — horizontal flow across agents, routing, memory, tasks */}
       <FlowLayer />
 
@@ -103,7 +121,7 @@ function SystemView() {
         <ServicePanel title="CORE SERVICES"    services={withLive(CORE_SERVICES)}    />
         <ServicePanel title="AI STACK"         services={withLive(AI_SERVICES)}      />
 
-        <div style={{ gridRow: "1 / 3" }}>
+        <div style={{ gridColumn: "3", gridRow: "1" }}>
           <ActivityLog />
         </div>
 
@@ -113,7 +131,9 @@ function SystemView() {
 
         <SystemMetrics />
 
-        <QuickActions />
+        <div style={{ gridColumn: "3 / span 2", gridRow: "2" }}>
+          <QuickActions />
+        </div>
       </div>
     </div>
   );
@@ -217,9 +237,11 @@ export default function Home() {
        view === "inbox"     ? <InboxView />     :
        view === "repos"     ? <ReposView />     :
        view === "docs"      ? <DocsView />      :
+       view === "notes"     ? <NotesBridgeView /> :
        view === "calendar"  ? <CalendarView />  :
        view === "team"      ? <TeamView />      :
        view === "office"    ? <OfficeView />    :
+       view === "star-tools"? <StarToolsView /> :
        view === "content"   ? <ContentView />   :
        view === "approvals" ? <ApprovalsView /> :
        view === "council"   ? <CouncilView />   :
@@ -233,6 +255,9 @@ export default function Home() {
        view === "keys"      ? <KeysView />      :
        view === "scripts"    ? <ScriptsView />    :
        view === "translate"  ? <TranslatorView /> :
+       view === "transcript" ? <TranscriptView /> :
+       view === "telegram"   ? <TelegramView />   :
+       view === "polls"      ? <PollsView />      :
        null}
     </div>
   );

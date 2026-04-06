@@ -358,7 +358,7 @@ export default function MemoryView() {
               name: "LCM",
               status: layers.lcm.status,
               desc: layers.lcm.description,
-              meta: "port 18790",
+              meta: "local · memory store",
               color: "var(--accent)",
             },
             {

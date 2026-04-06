@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import { spawn } from "child_process";
 
-type Status = "online" | "warn" | "offline";
+type Status = "online" | "warn" | "offline" | "idle";
 
 async function probe(url: string, timeoutMs = 2000): Promise<Status> {
   try {
@@ -15,14 +16,75 @@ async function probe(url: string, timeoutMs = 2000): Promise<Status> {
   }
 }
 
+function isSafeHostPart(v: string): boolean {
+  return /^[a-zA-Z0-9._-]+$/.test(v);
+}
+
+async function probeLucyOpenClaw(): Promise<Status> {
+  const host = process.env.LUCY_SSH_HOST ?? "100.119.215.107";
+  const user = process.env.LUCY_SSH_USER ?? "nana";
+  if (!isSafeHostPart(host) || !isSafeHostPart(user)) return "offline";
+
+  const cmd = [
+    "ssh",
+    "-i ~/.ssh/lucy",
+    "-o StrictHostKeyChecking=no",
+    "-o BatchMode=yes",
+    "-o ConnectTimeout=4",
+    `${user}@${host}`,
+    "\"curl -fsS --max-time 2 http://localhost:18789 >/dev/null\"",
+  ].join(" ");
+
+  return new Promise<Status>((resolve) => {
+    const p = spawn("wsl", ["-e", "bash", "-lc", cmd], { timeout: 8_000 });
+    p.on("close", (code) => resolve(code === 0 ? "online" : "offline"));
+    p.on("error", () => resolve("offline"));
+  });
+}
+
+async function probeHermesViaCommand(cmd: string): Promise<Status> {
+  return new Promise<Status>((resolve) => {
+    const p = spawn("wsl", ["-e", "bash", "-lc", cmd], { timeout: 12_000 });
+    p.on("close", (code) => resolve(code === 0 ? "online" : "offline"));
+    p.on("error", () => resolve("offline"));
+  });
+}
+
+async function probePhoenixHermes(): Promise<Status> {
+  return probeHermesViaCommand("~/.local/bin/hermes version >/dev/null 2>&1");
+}
+
+async function probeLucyHermes(): Promise<Status> {
+  const host = process.env.LUCY_SSH_HOST ?? "100.119.215.107";
+  const user = process.env.LUCY_SSH_USER ?? "nana";
+  if (!isSafeHostPart(host) || !isSafeHostPart(user)) return "offline";
+
+  const cmd = [
+    "ssh",
+    "-i ~/.ssh/lucy",
+    "-o StrictHostKeyChecking=no",
+    "-o BatchMode=yes",
+    "-o ConnectTimeout=4",
+    `${user}@${host}`,
+    "\"~/.local/bin/hermes version >/dev/null 2>&1 || hermes version >/dev/null 2>&1\"",
+  ].join(" ");
+
+  return probeHermesViaCommand(cmd);
+}
+
 export async function GET() {
+  const speakServiceDisabled =
+    process.env.SPEAK_SERVICE_DISABLED === "1" ||
+    process.env.SPEAK_SERVICE_DISABLED === "true";
+
   const checks = await Promise.all([
     // Core
     probe("http://localhost:7880").then(s          => [7880,  s]),
     probe("http://localhost:8787").then(s          => [8787,  s]),
     probe("http://localhost:18789").then(s         => [18789, s]),
-    probe("http://localhost:18790").then(s         => [18790, s]),
-    probe("http://localhost:8500/health").then(s   => [8500,  s]),
+    Promise.resolve([8004, speakServiceDisabled ? "idle" : null] as const).then(([port, forced]) =>
+      forced ? [port, forced] as const : probe("http://localhost:8004/health").then((s) => [port, s] as const)
+    ),
     probe("http://localhost:4000/health").then(s   => [4000,  s]),
     // AI Stack
     probe("http://localhost:8000/health").then(s   => [8000,  s]),
@@ -38,10 +100,22 @@ export async function GET() {
     probe("http://localhost:8880").then(s          => [8880,  s]),
   ]);
 
-  const result: Record<number, Status> = {};
+  const lucyOpenClaw = await probeLucyOpenClaw();
+  const [phoenixHermes, lucyHermes] = await Promise.all([
+    probePhoenixHermes(),
+    probeLucyHermes(),
+  ]);
+
+  const result: Record<string, Status | number> = {};
   for (const [port, status] of checks) {
-    result[port as number] = status as Status;
+    result[String(port)] = status as Status;
   }
 
-  return NextResponse.json({ ...result, checkedAt: Date.now() });
+  result.openclaw_phoenix = (result["18789"] as Status) ?? "offline";
+  result.openclaw_lucy = lucyOpenClaw;
+  result.hermes_phoenix = phoenixHermes;
+  result.hermes_lucy = lucyHermes;
+  result.checkedAt = Date.now();
+
+  return NextResponse.json(result);
 }

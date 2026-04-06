@@ -6,9 +6,10 @@
       "description": "Legend requests a new vector namespace for long-term creative references. Estimated size: 50k vectors.",
       "requestedBy": "Seraphim",
       "priority": "normal",
-      "status": "pending",
+      "status": "approved",
       "created": "2026-03-27T08:14:00.000Z",
-      "category": "Memory"
+      "category": "Memory",
+      "resolvedAt": "2026-04-02T06:14:52.168Z"
     },
     {
       "id": "a2",
@@ -16,9 +17,10 @@
       "description": "Diamond needs expanded shell permissions for the Lucy build environment. Currently read-only.",
       "requestedBy": "Seraphim",
       "priority": "urgent",
-      "status": "pending",
+      "status": "approved",
       "created": "2026-03-27T07:40:00.000Z",
-      "category": "Permissions"
+      "category": "Permissions",
+      "resolvedAt": "2026-04-02T06:15:00.664Z"
     },
     {
       "id": "a3",
@@ -26,9 +28,10 @@
       "description": "Elior has accumulated 30 days of session logs. Requesting approval to move to Archive store.",
       "requestedBy": "Elior",
       "priority": "low",
-      "status": "pending",
+      "status": "approved",
       "created": "2026-03-26T00:00:00.000Z",
-      "category": "Memory"
+      "category": "Memory",
+      "resolvedAt": "2026-04-02T06:15:04.949Z"
     },
     {
       "id": "a4",

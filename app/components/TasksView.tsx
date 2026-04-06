@@ -243,7 +243,7 @@ function NewTaskForm({ onSave, onCancel }: { onSave: (t: Partial<Task>) => void;
           onChange={(e) => setAssignee(e.target.value as Assignee)}
           style={{ ...inputStyle, flex: 1 }}
         >
-          <option value="nana">Nana (you)</option>
+          <option value="nana">Origin (you)</option>
           <option value="legend">Legend</option>
           <option value="seraphim">Seraphim</option>
           <option value="lumen">Lumen</option>

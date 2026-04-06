@@ -125,7 +125,7 @@ export async function GET() {
     },
     archive: {
       status: "static" as LayerStatus,
-      description: "File-based — mission-control/agents/",
+      description: "File-based — the-chamber/agents/",
     },
     checkedAt: Date.now(),
   });

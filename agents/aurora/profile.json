@@ -8,8 +8,8 @@
   "parent": "atlas",
   "transport": ["local"],
   "memoryNamespace": "aurora",
-  "modelPrimary": "groq/llama-3.3-70b-versatile",
-  "modelFallback": ["openrouter/auto"],
+  "modelPrimary": "openrouter/auto",
+  "modelFallback": ["ollama/qwen2.5:7b-instruct"],
   "tools": ["shell", "file-read", "system-check"],
   "division": "navigators",
   "meta": {

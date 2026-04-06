@@ -32,6 +32,8 @@ function extractDescription(source: string): string {
 }
 
 function humanName(file: string): string {
+  if (file === "mc-constellation-flow-loop.sh") return "Star Verification Loop";
+  if (file === "mc-olympus-orientation.sh") return "Olympus Orientation";
   return file
     .replace(/\.(sh|mjs|js)$/, "")
     .replace(/[-_]/g, " ")

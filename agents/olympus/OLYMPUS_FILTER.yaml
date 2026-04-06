@@ -1,0 +1,59 @@
+olympus:
+  mode: controlled_intake
+
+  cycle:
+    interval_minutes: 45
+    max_signals_per_cycle: 3
+
+  sources:
+    youtube: enabled
+    x: enabled
+    reddit: enabled
+    rss: enabled
+
+  filters:
+    signal_gate:
+      type: "2_of_3"
+
+      conditions:
+        relevance:
+          enabled: true
+          keywords:
+            - ai
+            - llm
+            - open source
+            - cybersecurity
+            - infrastructure
+            - automation
+            - agents
+            - docker
+            - gpu
+            - local ai
+
+        impact:
+          enabled: true
+          indicators:
+            - "new model"
+            - "release"
+            - "exploit"
+            - "breakthrough"
+            - "security flaw"
+            - "update"
+            - "integration"
+
+        recurrence:
+          enabled: true
+          min_sources: 2
+
+  suppression:
+    duplicate_window_minutes: 120
+    ignore_low_engagement: true
+
+  output:
+    format: "signal_packet"
+    forward_to:
+      - hermes
+
+  fail_behavior:
+    on_empty_cycle: "silent"
+    on_error: "report_to_sentinel"

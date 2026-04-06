@@ -69,7 +69,7 @@ const MOCK_MEMOS: Memo[] = [
   {
     id:        "m3",
     title:     "Diamond shell scope — deferred review",
-    body:      "Shell expansion request was deferred 2 days ago. No resolution. Diamond is currently read-only on Lucy, blocking automated repo tagging. Recommend Nana reviews approval a3 and clears the queue.",
+    body:      "Shell expansion request was deferred 2 days ago. No resolution. Diamond is currently read-only on Lucy, blocking automated repo tagging. Recommend Origin reviews approval a3 and clears the queue.",
     author:    "Seraphim",
     type:      "governance",
     status:    "new",

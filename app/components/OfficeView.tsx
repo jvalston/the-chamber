@@ -15,6 +15,7 @@ const AGENT_COLOR: Record<string, string> = {
   kairo:    "#38bdf8",
   aurelion: "#facc15",
   veris:    "#4ade80",
+  olympus:  "#22d3ee",
 };
 
 const AGENT_ACTIVITY: Record<string, string> = {
@@ -29,6 +30,7 @@ const AGENT_ACTIVITY: Record<string, string> = {
   elior:    "Memory archive · recall",
   atlas:    "Research scouting",
   aurora:   "Content indexing · docs",
+  olympus:  "AI news intelligence · signal watch",
 };
 
 // Grid positions: col (1-4), row (1-3)
@@ -43,6 +45,7 @@ const AGENT_DESK: Record<string, { col: number; row: number }> = {
   kairo:    { col: 1, row: 2 },
   aurelion: { col: 2, row: 2 },
   veris:    { col: 3, row: 2 },
+  olympus:  { col: 4, row: 2 },
   diamond:  { col: 1, row: 3 },
   elior:    { col: 2, row: 3 },
   atlas:    { col: 3, row: 3 },
