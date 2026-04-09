@@ -35,7 +35,8 @@ export async function GET() {
     const startedAtRaw = Number.parseInt(String(data.startedAt ?? "0"), 10);
     const updatedMs = Date.parse(updatedAtRaw);
     const ageSec = Number.isFinite(updatedMs) ? Math.floor((Date.now() - updatedMs) / 1000) : null;
-    const dynamicElapsed = Number.isFinite(startedAtRaw) && startedAtRaw > 0
+    const isActiveRun = stateRaw === "running";
+    const dynamicElapsed = isActiveRun && Number.isFinite(startedAtRaw) && startedAtRaw > 0
       ? Math.max(0, Math.floor(Date.now() / 1000) - startedAtRaw)
       : Number(data.elapsedSec ?? 0);
 

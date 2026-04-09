@@ -71,11 +71,9 @@ export const HOST_MACHINES: HostMachine[] = [
 // ---------------------------------------------------------------------------
 
 export const CORE_SERVICES: Service[] = [
-  { name: "LiveKit",       status: "online", port: 7880   },
-  { name: "LiveKit Agent", status: "online", detail: "Docker service active" },
-  { name: "Legend UI",     status: "online", port: 8787   },
-  { name: "Provider GW",   status: "online", port: 4000   },
-  { name: "Speak Service", status: "online", port: 8004   },
+  { name: "Legend Runtime", status: "online", port: 8090   },
+  { name: "Provider GW",    status: "online", port: 4000   },
+  { name: "Speak Service",  status: "online", port: 8004   },
   { name: "OpenClaw (Phoenix)", status: "online", port: 18789, healthKey: "openclaw_phoenix", host: "Phoenix" },
   { name: "OpenClaw (Lucy)",    status: "online", port: 18789, healthKey: "openclaw_lucy",    host: "Lucy"    },
 ];
@@ -85,7 +83,7 @@ export const AI_SERVICES: Service[] = [
   { name: "Qdrant",         status: "online",  port: 16333 },
   { name: "Whisper STT",    status: "offline", port: 11435 },
   { name: "Chatterbox TTS", status: "offline", port: 8004  },
-  { name: "llama.cpp LLM",  status: "offline", port: 11436 },
+  { name: "Ollama (Gemma4)", status: "online",  port: 11434 },
 ];
 
 export const SUPPORT_SERVICES: Service[] = [
