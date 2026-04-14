@@ -32,6 +32,11 @@ const ACTIONS: { label: string; action: string; accent?: boolean; warn?: boolean
   { label: "Hermes Doctor",      action: "doctor-hermes",                 },
 ];
 
+interface HermesVersionStatus {
+  phoenix: { version: string; upToDate: boolean };
+  lucy:    { version: string; upToDate: boolean };
+}
+
 export default function QuickActions() {
   const [running, setRunning] = useState<string | null>(null);
   const [steps,   setSteps]   = useState<Step[]>([]);
@@ -39,6 +44,7 @@ export default function QuickActions() {
   const [target,  setTarget]  = useState<TargetNode>("phoenix");
   const [flowPath, setFlowPath] = useState<string>("/home/natza/.openclaw/mission-control/test_flow");
   const [flowStatus, setFlowStatus] = useState<FlowStatus | null>(null);
+  const [hermesVersion, setHermesVersion] = useState<HermesVersionStatus | null>(null);
   const targetButtons: TargetLabel[] = [
     { id: "both", label: "BOTH" },
     { id: "phoenix", label: "PHOENIX" },
@@ -60,6 +66,25 @@ export default function QuickActions() {
     }
     poll();
     const id = setInterval(poll, 2500);
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function checkVersions() {
+      try {
+        const r = await fetch("/api/system", { cache: "no-store" });
+        const d = await r.json();
+        if (mounted) setHermesVersion(d);
+      } catch {
+        // keep last known state
+      }
+    }
+    checkVersions();
+    const id = setInterval(checkVersions, 5 * 60 * 1000); // every 5 min
     return () => {
       mounted = false;
       clearInterval(id);
@@ -227,15 +252,20 @@ export default function QuickActions() {
 
         {ACTIONS.map(({ label: lbl, action, accent, warn }) => {
           const isRunning = running === action;
-          const borderCol = accent ? "rgba(0,212,255,0.35)" : warn ? "rgba(255,160,50,0.35)" : "var(--border)";
-          const textCol   = accent ? "var(--accent)"        : warn ? "var(--yellow)"          : "var(--text-secondary)";
+          const isHermesUpdate = action === "update-hermes";
+          const hermesUpdateAvailable = isHermesUpdate && hermesVersion && (
+            !hermesVersion.phoenix.upToDate || !hermesVersion.lucy.upToDate
+          );
+          const effectiveAccent = accent || hermesUpdateAvailable;
+          const borderCol = hermesUpdateAvailable ? "rgba(255,200,0,0.5)" : effectiveAccent ? "rgba(0,212,255,0.35)" : warn ? "rgba(255,160,50,0.35)" : "var(--border)";
+          const textCol   = hermesUpdateAvailable ? "var(--yellow)"        : effectiveAccent ? "var(--accent)"        : warn ? "var(--yellow)"          : "var(--text-secondary)";
           return (
             <button
               key={action}
               disabled={!!running}
               onClick={() => run(action, lbl)}
               style={{
-                background:    isRunning ? "rgba(0,212,255,0.08)" : "transparent",
+                background:    isRunning ? "rgba(0,212,255,0.08)" : hermesUpdateAvailable ? "rgba(255,200,0,0.06)" : "transparent",
                 border:        `1px solid ${borderCol}`,
                 color:         isRunning ? "var(--accent)" : textCol,
                 padding:       "6px 10px",
@@ -247,6 +277,9 @@ export default function QuickActions() {
                 fontFamily:    "inherit",
                 width:         "100%",
                 opacity:       running && !isRunning ? 0.4 : 1,
+                display:       "flex",
+                justifyContent: "space-between",
+                alignItems:    "center",
               }}
               onMouseEnter={(e) => {
                 if (running) return;
@@ -258,10 +291,17 @@ export default function QuickActions() {
                 if (running) return;
                 e.currentTarget.style.borderColor = borderCol;
                 e.currentTarget.style.color       = textCol;
-                e.currentTarget.style.background  = "transparent";
+                e.currentTarget.style.background  = hermesUpdateAvailable ? "rgba(255,200,0,0.06)" : "transparent";
               }}
             >
-              {isRunning ? `${lbl}…` : lbl}
+              <span>{isRunning ? `${lbl}…` : lbl}</span>
+              {isHermesUpdate && hermesVersion && (
+                <span style={{ fontSize: "8px", letterSpacing: "0.06em", opacity: 0.85 }}>
+                  {hermesUpdateAvailable
+                    ? `UPDATE AVAILABLE`
+                    : `v${hermesVersion.phoenix.version} ✓`}
+                </span>
+              )}
             </button>
           );
         })}

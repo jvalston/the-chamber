@@ -1,6 +1,28 @@
 {
   "docs": [
     {
+      "id": "d_phoenix_migration_001",
+      "title": "Phoenix Drive Migration Directive",
+      "category": "Infrastructure",
+      "format": "md",
+      "project": "",
+      "agent": "veris",
+      "summary": "Full migration plan: reduce C:\\ to ≤1.2TB via Veris, clone to new 2TB SSD, wipe 4TB drive and reassign to Axiom. Five-phase sequence with safety gates at each stage.",
+      "path": "C:/Users/natza/Desktop/chamber/agents/veris/PHOENIX_DRIVE_MIGRATION_DIRECTIVE.md",
+      "createdAt": "2026-04-06"
+    },
+    {
+      "id": "d_veris_custodian_001",
+      "title": "Veris Active Custodian Protocol",
+      "category": "Infrastructure",
+      "format": "md",
+      "project": "",
+      "agent": "veris",
+      "summary": "Complete operating protocol for Veris in Active Custodian mode. Covers deduplication, sync, transfer safety, folder schema, protected paths, in-use protection, capacity checks, and persistent operational loop.",
+      "path": "C:/Users/natza/Desktop/chamber/agents/veris/VERIS_ACTIVE_CUSTODIAN_PROTOCOL.md",
+      "createdAt": "2026-04-06"
+    },
+    {
       "id": "d1773873612004",
       "title": "Constellation Agent Index",
       "category": "Governance",

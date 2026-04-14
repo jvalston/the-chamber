@@ -187,6 +187,17 @@ async function runDoctor(target: TargetNode, steps: Step[]) {
   steps.push({ step: "Doctor", output: dr.out, ok: dr.ok });
 }
 
+async function checkHermesVersion(target: TargetNode): Promise<{ version: string; upToDate: boolean; raw: string }> {
+  const cfg = NODE_CONFIG[target];
+  const bin = cfg.hermesBin ?? "hermes";
+  const res = await runOnTarget(target, `${bin} version 2>&1`, 30_000);
+  const raw = res.out;
+  const versionMatch = raw.match(/v(\d+\.\d+\.\d+)/);
+  const version  = versionMatch ? versionMatch[1] : "unknown";
+  const upToDate = /up to date/i.test(raw);
+  return { version, upToDate, raw };
+}
+
 async function runHermesUpdate(target: TargetNode, steps: Step[]) {
   const cfg = NODE_CONFIG[target];
   const bin = cfg.hermesBin ?? "hermes";
@@ -316,11 +327,28 @@ async function runActionForTarget(action: string, target: TargetNode, steps: Ste
     return;
   }
 
+  if (action === "hermes-version") {
+    const info = await checkHermesVersion(target);
+    steps.push({ step: "Hermes version", output: info.raw, ok: true });
+    return;
+  }
+
   throw new Error("unknown action");
 }
 
 function prefixSteps(prefix: string, steps: Step[]): Step[] {
   return steps.map((s) => ({ ...s, step: `[${prefix}] ${s.step}` }));
+}
+
+export async function GET() {
+  const [phoenix, lucy] = await Promise.allSettled([
+    checkHermesVersion("phoenix"),
+    checkHermesVersion("lucy"),
+  ]);
+  return NextResponse.json({
+    phoenix: phoenix.status === "fulfilled" ? phoenix.value : { version: "unknown", upToDate: true, raw: "" },
+    lucy:    lucy.status    === "fulfilled" ? lucy.value    : { version: "unknown", upToDate: true, raw: "" },
+  });
 }
 
 export async function POST(req: NextRequest) {
@@ -333,7 +361,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "action is required" }, { status: 400 });
   }
 
-  if (!["update", "restart", "health", "doctor", "reauth-codex", "provider-health", "update-hermes", "doctor-hermes"].includes(action)) {
+  if (!["update", "restart", "health", "doctor", "reauth-codex", "provider-health", "update-hermes", "doctor-hermes", "hermes-version"].includes(action)) {
     return NextResponse.json({ error: "unknown action" }, { status: 400 });
   }
 

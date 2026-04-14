@@ -79,8 +79,7 @@ export async function GET() {
 
   const checks = await Promise.all([
     // Core
-    probe("http://localhost:7880").then(s          => [7880,  s]),
-    probe("http://localhost:8787").then(s          => [8787,  s]),
+    probe("http://localhost:8090/health").then(s   => [8090,  s]),
     probe("http://localhost:18789").then(s         => [18789, s]),
     Promise.resolve([8004, speakServiceDisabled ? "idle" : null] as const).then(([port, forced]) =>
       forced ? [port, forced] as const : probe("http://localhost:8004/health").then((s) => [port, s] as const)
@@ -91,12 +90,11 @@ export async function GET() {
     probe("http://localhost:16333/healthz").then(s => [16333, s]),
     probe("http://localhost:11435").then(s         => [11435, s]),
     probe("http://localhost:8004").then(s          => [8004,  s]),
-    probe("http://localhost:11436").then(s         => [11436, s]),
+    probe("http://localhost:11434").then(s         => [11434, s]),
     // Support
     probe("http://localhost:8001").then(s          => [8001,  s]),
     probe("http://localhost:8002").then(s          => [8002,  s]),
     probe("http://localhost:11450").then(s         => [11450, s]),
-    probe("http://localhost:11434").then(s         => [11434, s]),
     probe("http://localhost:8880").then(s          => [8880,  s]),
   ]);
 

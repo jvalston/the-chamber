@@ -125,14 +125,16 @@ function SystemView() {
           <ActivityLog />
         </div>
 
-        <CloudGate />
+        <div style={{ gridColumn: "4", gridRow: "1 / span 2", overflow: "hidden" }}>
+          <QuickActions />
+        </div>
 
         <ServicePanel title="SUPPORT SERVICES" services={withLive(SUPPORT_SERVICES)} />
 
         <SystemMetrics />
 
-        <div style={{ gridColumn: "3 / span 2", gridRow: "2" }}>
-          <QuickActions />
+        <div style={{ gridColumn: "3", gridRow: "2" }}>
+          <CloudGate />
         </div>
       </div>
     </div>
